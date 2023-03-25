@@ -1,8 +1,11 @@
 import React from 'react'
+import Login from './pages/login/Login'
 
 function App() {
   return (
-    <div>App</div>
+    <section className='social__app'>
+        <Login/>
+    </section>
   )
 }
 
