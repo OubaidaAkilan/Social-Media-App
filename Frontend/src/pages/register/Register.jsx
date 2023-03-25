@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import './register.scss';
 
 const Register = () => {
@@ -12,7 +14,9 @@ const Register = () => {
             consequatur.
           </p>
           <span>Do you have an account?</span>
+          <Link to='/login'>
           <button>Login</button>
+          </Link>
         </div>
         <div className='right'>
           <h1>Register</h1>
@@ -21,8 +25,9 @@ const Register = () => {
             <input type='text' placeholder='Email' />
             <input type='password' placeholder='Password' />
             <input type='password' placeholder='Confirm password' />
-
-            <button>register</button>
+            
+              <button>Register</button>
+            
           </form>
         </div>
       </div>
