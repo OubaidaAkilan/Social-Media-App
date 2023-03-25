@@ -3,8 +3,6 @@ import {
   Navigate,
   Outlet,
   RouterProvider,
-  // Routes,
-  // Route,
 } from 'react-router-dom';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
@@ -28,18 +26,6 @@ function App() {
       </section>
     );
   };
-  // return (
-  //   <div>
-  //     <Routes>
-  //       <Route path='/' element={<Layout />}>
-  //         <Route index element={<Home />} />
-  //         <Route path='/profile/:id' element={<Profile />} />
-  //       </Route>
-  //       <Route path='/login' element={<Login />} />
-  //       <Route path='/register' element={<Register />} />
-  //     </Routes>
-  //   </div>
-  // );
 
   const currentUser = true;
   const ProtectedRoutes = ({ children }) => {
