@@ -1,0 +1,81 @@
+.social__login {
+  height: 100vh;
+  background-color: rgb(193, 190, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .card {
+    width: 50%;
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    min-height: 600px;
+
+    .left {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      color: white;
+      padding: 3rem;
+      background-image: linear-gradient(
+          rgba(39, 11, 96, 0.5),
+          rgba(39, 11, 96, 0.5)
+        ),
+        url('../../assets/login.jpeg');
+      background-size: cover;
+      h1 {
+        font-size: 3rem;
+        line-height: 1.2;
+      }
+      p {
+      }
+      span {
+        font-size: 14px;
+      }
+      button {
+        width: 50%;
+        padding: 10px;
+        border: none;
+        background-color: white;
+        color: rebeccapurple;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+    .right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3rem;
+      color: white;
+      padding: 3rem;
+      h1 {
+        font-size: 2rem;
+        line-height: 1.5;
+        color: #555;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        input {
+          border: none;
+          border-bottom: 1px solid lightgray;
+          padding: 1rem 0.5rem;
+        }
+        button {
+          width: 50%;
+          padding: 10px;
+          border: none;
+          background-color: #938eef;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
