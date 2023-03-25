@@ -1,4 +1,9 @@
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  RouterProvider,
+} from 'react-router-dom';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 
@@ -21,10 +26,22 @@ function App() {
       </section>
     );
   };
+  const currentUser = true;
+  const ProtectedRoutes = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to='login' />;
+    }
+    return children;
+  };
+
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Layout />,
+      element: (
+        <ProtectedRoutes>
+          <Layout />
+        </ProtectedRoutes>
+      ),
       children: [
         { path: '/', element: <Home /> },
         { path: '/profile/:id', element: <Profile /> },
