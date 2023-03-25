@@ -1,8 +1,10 @@
 import {
-  createBrowserRouter,
-  Navigate,
+  // createBrowserRouter,
+  // Navigate,
   Outlet,
-  RouterProvider,
+  // RouterProvider,
+  Routes,
+  Route,
 } from 'react-router-dom';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
@@ -26,38 +28,51 @@ function App() {
       </section>
     );
   };
-  const currentUser = true;
-  const ProtectedRoutes = ({ children }) => {
-    if (!currentUser) {
-      return <Navigate to='login' />;
-    }
-    return children;
-  };
+  return (
+    <div>
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path='/profile/:id' element={<Profile />} />
+        </Route>
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+      </Routes>
+    </div>
+  );
 
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: (
-        <ProtectedRoutes>
-          <Layout />
-        </ProtectedRoutes>
-      ),
-      children: [
-        { path: '/', element: <Home /> },
-        { path: '/profile/:id', element: <Profile /> },
-      ],
-    },
-    {
-      path: '/login',
-      element: <Login />,
-    },
-    {
-      path: '/register',
-      element: <Register />,
-    },
-  ]);
+  // const currentUser = true;
+  // const ProtectedRoutes = ({ children }) => {
+  //   if (!currentUser) {
+  //     return <Navigate to='login' />;
+  //   }
+  //   return children;
+  // };
 
-  return <RouterProvider router={router} />;
+  // const router = createBrowserRouter([
+  //   {
+  //     path: '/',
+  //     element: (
+  //       <ProtectedRoutes>
+  //         <Layout />
+  //       </ProtectedRoutes>
+  //     ),
+  //     children: [
+  //       { path: '/', element: <Home /> },
+  //       { path: '/profile/:id', element: <Profile /> },
+  //     ],
+  //   },
+  //   {
+  //     path: '/login',
+  //     element: <Login />,
+  //   },
+  //   {
+  //     path: '/register',
+  //     element: <Register />,
+  //   },
+  // ]);
+
+  // return <RouterProvider router={router} />;
 }
 
 export default App;
