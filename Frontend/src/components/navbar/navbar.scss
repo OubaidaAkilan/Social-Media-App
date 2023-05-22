@@ -5,6 +5,10 @@
   padding: 1rem 2rem;
   min-height: 2rem;
   border-bottom: 1px solid lightgray;
+  position: sticky;
+  top: 0;
+  
+  background-color: white;
   .social__nav-left {
     display: flex;
     flex: 1;
