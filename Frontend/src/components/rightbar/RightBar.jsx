@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
+import './rightBar.scss';
 
 const RightBar = () => {
-  return (
-    <div>RightBar</div>
-  )
-}
+  return <section className='social__rightBar'>Right Bar</section>;
+};
 
-export default RightBar
+export default RightBar;
