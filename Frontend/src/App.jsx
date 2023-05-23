@@ -16,7 +16,7 @@ import Profile from './pages/profile/Profile';
 function App() {
   const Layout = () => {
     return (
-      <section>
+      <section className='theme-dark'>
         <Navbar />
         <div style={{ display: 'flex' }}>
           <LeftBar />

@@ -16,9 +16,9 @@ const Navbar = () => {
         <Link to='/' style={{ textDecoration: 'none' }}>
           <span>Social-Media</span>
         </Link>
-        <HomeOutlinedIcon />
-        <DarkModeOutlinedIcon />
-        <GridViewOutlinedIcon />
+        <HomeOutlinedIcon className='social__nav-icons' />
+        <DarkModeOutlinedIcon className='social__nav-icons' />
+        <GridViewOutlinedIcon className='social__nav-icons' />
         <div className='social__nav-left-search'>
           <SearchOutlinedIcon
             style={{ color: '#555', fontSize: '1rem', marginRight: '0.5rem' }}
@@ -27,9 +27,9 @@ const Navbar = () => {
         </div>
       </div>
       <div className='social__nav-right'>
-        <PersonOutlineOutlinedIcon />
-        <EmailOutlinedIcon />
-        <NotificationsNoneOutlinedIcon />
+        <PersonOutlineOutlinedIcon className='social__nav-icons' />
+        <EmailOutlinedIcon className='social__nav-icons' />
+        <NotificationsNoneOutlinedIcon className='social__nav-icons' />
         <div className='social__nav-user'>
           <img src={profileImage} alt='profileImage' />
           <span>Oubaida</span>
