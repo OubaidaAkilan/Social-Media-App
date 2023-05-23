@@ -6,34 +6,58 @@
   padding: 1rem;
   position: sticky;
   top: 70px;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 100px);
   overflow: scroll;
   &::-webkit-scrollbar {
     display: none;
   }
-  .social__rightBar-container {
+
+  .social__rightBar-suggestion,
+  .social__rightBar-lastActivites,
+  .social__rightBar-onlineFriends {
     background-color: white;
     padding: 1rem;
-
+    border-radius: 5px;
+    margin-bottom: 1rem;
     .item {
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      span {
+        color: gray;
+      }
 
       .user {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-bottom: 1rem;
         .userInfo {
           display: flex;
           align-items: center;
           justify-content: space-between;
           gap: 20px;
+          position: relative;
           img {
             width: 40px;
             height: 40px;
             object-fit: cover;
             border-radius: 50%;
+          }
+          .online{
+            width: 10px;
+            height: 10px;
+            background-color: limegreen;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 30px;
+          }
+          span {
+            color: black;
+          }
+          p{
+           color: gray;
           }
         }
         .buttons {
@@ -56,4 +80,5 @@
       }
     }
   }
+
 }
