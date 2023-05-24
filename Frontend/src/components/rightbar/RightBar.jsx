@@ -1,7 +1,6 @@
 import React from 'react';
 import './rightBar.scss';
 import profileImage from '../../assets/login.jpeg';
-import { blue } from '@mui/material/colors';
 
 const RightBar = () => {
   return (
