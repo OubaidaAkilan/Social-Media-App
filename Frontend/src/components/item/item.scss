@@ -4,7 +4,6 @@
   @include themify($themes) {
     display: flex;
     gap: 10px;
-    justify-content: start;
     align-items: center;
     img {
       height: 30px;
