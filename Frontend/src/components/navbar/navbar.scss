@@ -13,14 +13,14 @@
     z-index: 999;
 
     background-color: themed(bg);
-         .social__nav-icons{
+    .social__nav-icons {
       color: themed(textColorSoft);
     }
     .social__nav-left {
       display: flex;
       flex: 1;
       gap: 1rem;
- 
+
       span {
         font-weight: bold;
         font-size: 1.2rem;
@@ -42,6 +42,13 @@
             outline: none;
             color: themed(textColorSoft);
           }
+          @include mobile {
+            display: none;
+          }
+
+          @include tablet {
+            width: 200px;
+          }
         }
       }
     }
@@ -51,11 +58,17 @@
       align-items: center;
       justify-content: flex-end;
       gap: 1rem;
+      @include mobile {
+        display: none;
+      }
       .social__nav-user {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 1rem;
+        @include tablet {
+          display: none;
+        }
         img {
           width: 30px;
           height: 30px;
