@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import Item from '../item/Item';
 import './leftBar.scss';
 
-import profileImage from '../../assets/login.jpeg';
 import Friends from '../../assets/1.png';
 import Groups from '../../assets/2.png';
 import MarketPlace from '../../assets/3.png';
