@@ -1,35 +1,45 @@
+@import '../../style.scss';
+
 .social__leftBar {
-  flex: 2;
-  position: sticky;
-  top: 70px;
-  height: calc(100vh - 100px);
-  overflow: scroll;
-    &::-webkit-scrollbar{
-    display: none;
-  }
-  .container {
+  @include themify($themes) {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 20px;
-
-    hr {
-      margin: 20px 0;
-      border: none;
-      height: 0.5px;
-      background-color: lightgrey;
+    flex: 2;
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 60px);
+    background-color: themed(bg);
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
     }
-    .menu {
+    @include mobile {
+      display: none;
+    }
+ 
+    .container {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      *:first-child {
-        color: black;
-        font-size: 1.5rem;
+      padding: 20px;
+
+      hr {
+        margin: 20px 0;
+        border: none;
+        height: 0.5px;
       }
-      span {
-        font-size: 12px;
-        color: gray;
+      .menu {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        *:first-child {
+          color: themed('textColor');
+          font-size: 1.5rem;
+        }
+        span {
+          font-size: 12px;
+          color: themed('textColorSoft');
+        }
       }
     }
   }

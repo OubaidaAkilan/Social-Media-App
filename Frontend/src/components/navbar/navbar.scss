@@ -1,59 +1,84 @@
+@import '../../style.scss';
+
 .social__nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  min-height: 2rem;
-  border-bottom: 1px solid lightgray;
-  position: sticky;
-  top: 0;
-  
-  background-color: white;
-  .social__nav-left {
+  @include themify($themes) {
     display: flex;
-    flex: 1;
-    gap: 1rem;
-    span {
-      font-weight: bold;
-      font-size: 1.2rem;
-      line-height: 0;
-      color: darkblue;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    min-height: 2rem;
+    border-bottom: 1px solid themed(border);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+
+    background-color: themed(bg);
+    .social__nav-icons {
+      color: themed(textColorSoft);
     }
-    .social__nav-left-search {
+    .social__nav-left {
       display: flex;
       flex: 1;
-      align-items: center;
-      border: 1px solid lightgray;
-      border-radius: 5px;
-      padding: 5px 5px;
-      input {
-        border: none;
-        &:focus-visible {
-          outline: none;
-          color: #555;
+      gap: 1rem;
+
+      span {
+        font-weight: bold;
+        font-size: 1.2rem;
+        line-height: 0;
+        color: themed(logo);
+      }
+      .social__nav-left-search {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        border: 1px solid themed(border);
+        border-radius: 5px;
+        padding: 5px 5px;
+        input {
+          border: none;
+          background-color: transparent;
+          flex: 1;
+          &:focus-visible {
+            outline: none;
+            color: themed(textColorSoft);
+          }
+          @include mobile {
+            display: none;
+          }
+
+          @include tablet {
+            width: 200px;
+          }
         }
       }
     }
-  }
-  .social__nav-right {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 1rem;
-    .social__nav-user {
+    .social__nav-right {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1rem;
+      @include mobile {
+        display: none;
+      }
+      .social__nav-user {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 1rem;
-      img {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-      span {
-        font-weight: 500;
+        @include tablet {
+          display: none;
+        }
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+        span {
+          font-weight: 500;
+          color: themed(textColor);
+        }
       }
     }
   }

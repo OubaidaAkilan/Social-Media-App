@@ -1,3 +1,23 @@
-.social__home{
+@import '../../style.scss';
+
+.social__home {
+  @include themify($themes) {
+    background-color: themed(bgSoft);
     flex: 6;
+    padding: 20px 70px;
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 60px);
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    @include mobile {
+      padding: 10px;
+    }
+
+    @include tablet {
+      padding: 20px;
+    }
+  }
 }
