@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+// import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -27,7 +27,7 @@ const Post = ({ post }) => {
       </div>
       <div className='content'>
         <p className='desc'>{post.desc}</p>
-        <img src={post.img} alt='image' />
+        <img src={post.img} alt='profilePic' />
       </div>
       <div className='infoPost'>
         <div className='item'>

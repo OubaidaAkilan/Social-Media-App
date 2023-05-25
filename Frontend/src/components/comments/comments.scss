@@ -1,30 +1,58 @@
+@import '../../style.scss';
+
 .social__comments {
-  display: flex;
-  flex-direction: column;
-  margin-top: 2rem;
-  .social_comments-comment {
+  @include themify($themes) {
     display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    flex-direction: column;
+    margin-top: 2rem;
     img {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       object-fit: cover;
     }
-    .commentInfo {
+    .social__comments-write {
       display: flex;
-      flex: 5;
-      flex-direction: column;
-     
-      span {
-        font-weight: 500;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin: 0;
+      margin-bottom: 2rem;
+      input {
+        flex: 5;
+        padding: 10px;
+        border: 1px solid themed(border);
+        background-color: transparent;
+        color: themed(textColor);
+      }
+      button {
+        border: none;
+        background-color: #5271ff;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 3px;
       }
     }
-    .commentDate{
+    .social_comments-comment {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+
+      .commentInfo {
+        display: flex;
+        flex: 5;
+        flex-direction: column;
+
+        span {
+          font-weight: 500;
+        }
+      }
+      .commentDate {
         align-self: center;
         color: gray;
+      }
     }
   }
 }
