@@ -1,7 +1,7 @@
 @import '../../style.scss';
 .social__rightBar {
   @include themify($themes) {
-    background-color:  themed(bgSoft);
+    background-color: themed(bgSoft);
     display: flex;
     flex-direction: column;
     flex: 3;
@@ -13,7 +13,12 @@
     &::-webkit-scrollbar {
       display: none;
     }
-
+    @include mobile {
+      display: none;
+    }
+    @include tablet {
+      display: none;
+    }
     .social__rightBar-suggestion,
     .social__rightBar-lastActivites,
     .social__rightBar-onlineFriends {
@@ -66,7 +71,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            
+
             button {
               padding: 5px;
               color: themed(textColor);
