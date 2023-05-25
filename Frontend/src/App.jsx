@@ -5,6 +5,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 
+import './App.scss'
 import { useContext } from 'react';
 
 import Login from './pages/login/Login';
@@ -27,7 +28,7 @@ function App() {
     return (
       <section className={`theme-${darkMode ? 'dark' : 'light'}`}>
         <Navbar />
-        <div style={{ display: 'flex' }}>
+        <div className='main' style={{ display: 'flex' }}>
           <LeftBar />
           <Outlet />
           <RightBar />

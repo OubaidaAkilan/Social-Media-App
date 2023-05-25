@@ -2,9 +2,12 @@
 
 .social__leftBar {
   @include themify($themes) {
+    display: flex;
+    flex-direction: column;
     flex: 2;
     position: sticky;
-    height: calc(100vh - 70px);
+    top: 70px;
+    height: calc(100vh - 60px);
     background-color: themed(bg);
     overflow: scroll;
     &::-webkit-scrollbar {
