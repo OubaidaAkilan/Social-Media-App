@@ -1,0 +1,30 @@
+.social__comments {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  .social_comments-comment {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .commentInfo {
+      display: flex;
+      flex: 5;
+      flex-direction: column;
+     
+      span {
+        font-weight: 500;
+      }
+    }
+    .commentDate{
+        align-self: center;
+        color: gray;
+    }
+  }
+}
