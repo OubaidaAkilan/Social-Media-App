@@ -1,5 +1,6 @@
 'use strict';
-const mongoose = require('mongoose');
+const { mongoose} = require('../ourPackages');
+
 
 const likeSchema = mongoose.Schema(
   {
