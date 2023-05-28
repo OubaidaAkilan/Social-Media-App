@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+'use strict';
+const { mongoose } = require('../ourPackages');
 
 const followerSchema = new mongoose.Schema(
   {

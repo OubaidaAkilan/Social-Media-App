@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+'use strict';
+const { mongoose, bcrypt } = require('../ourPackages');
+
 const postModel = require('../Post/postModel');
 const commentModel = require('../Comment/commentModel');
 const storyModel = require('../Story/storyModel');
