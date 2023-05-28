@@ -20,10 +20,16 @@ app.get('/', (req, res) => {
   res.send('Test test the server 😁');
 });
 
-// ==== Connection with server
-const PORT = process.env.PORT || 8000;
-const server = app.listen(PORT, () => {
-  console.log(`Server running on port  ${PORT}`);
-  //==== Connect the DB
-  dbConnection();
-});
+//==== Connect the DB
+dbConnection()
+  .then(() => {
+    // ==== Connection with server
+    const PORT = process.env.PORT || 8000;
+
+    const server = app.listen(PORT, () => {
+      console.log(`Server running on port  ${PORT}`);
+    });
+  })
+  .catch((e) => {
+    console.error('Failed to connect to the database:', error);
+  });
