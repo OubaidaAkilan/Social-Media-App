@@ -1,8 +1,11 @@
 'use strict';
-const { express, dotenv } = require('./ourPackages');
+const { express, dotenv, bodyParser } = require('./ourPackages.js');
+const accountRoutes = require('./Account/accountRoutes.js');
+const globalErorrHandlingMidleware = require('./ErrorHandler/globalErorrHandlingMidleware.js');
+const ApiError = require('./ErrorHandler/ApiError.js');
 
 //===== DB
-const dbConnection = require('./config/database');
+const dbConnection = require('./config/database.js');
 
 //==== Enviroment
 dotenv.config({ path: 'config.env' });
@@ -13,11 +16,13 @@ dotenv.config({ path: 'config.env' });
 const app = express();
 
 // Middlewares
+app.use(bodyParser.json());
 
 // Mount Routes
 app.get('/', (req, res) => {
   res.send('Test test the server 😁');
 });
+app.use('/api/v1/account', accountRoutes);
 
 //==== Connect the DB
 dbConnection()
@@ -32,3 +37,22 @@ dbConnection()
   .catch((e) => {
     console.error('Failed to connect to the database:', error);
   });
+
+//===Error Handling
+// @desc Handle unhandled routes and send error into Error handling middleware.
+app.all('*', (req, res, next) => {
+  // Create error and send it to global error handling middleware.
+  next(new ApiError(`Cant find this rout ${req.originalUrl}`, 400));
+});
+
+// Global error handling middleware, you must use it after mount routs
+app.use(globalErorrHandlingMidleware);
+
+// @desc  Handle errors outside express unhandle rejections.
+process.on('unhandledRejection', (err) => {
+  console.error(`unhandledRejection : ${err.name} | ${err.message} `);
+  server.close(() => {
+    console.error('Shutting down .....');
+    process.exit(1); //to stop app.
+  });
+});
