@@ -53,16 +53,16 @@ exports.createUser = asyncHandler(async (req, res) => {
 // @route   Put /api/v1/users/:id
 // @access  Private
 exports.updateUser = asyncHandler(async (req, res, next) => {
-  const { name } = req.body;
+  const { username } = req.body;
   const { id } = req.params;
   const user = await userModel.findOneAndUpdate(
     { _id: id },
     {
-      name,
-      slug: slugify(name),
+      username,
+      name: slugify(username),
+      slug: slugify(username),
       email: req.body.email,
-      phone: req.body.phone,
-      profileImg: req.body.profileImg,
+      
     },
     {
       new: true,
@@ -88,7 +88,6 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ active: user.active });
 });
-
 
 // @desc    Change the passwor for user
 // @route   Update /api/v1/users/change-password/:id
