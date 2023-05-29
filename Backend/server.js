@@ -1,6 +1,9 @@
 'use strict';
 const { express, dotenv, bodyParser } = require('./ourPackages.js');
 const accountRoutes = require('./Account/accountRoutes.js');
+const globalErorrHandlingMidleware = require('./ErrorHandler/globalErorrHandlingMidleware.js');
+const ApiError = require('./ErrorHandler/ApiError.js');
+
 //===== DB
 const dbConnection = require('./config/database.js');
 
@@ -36,8 +39,14 @@ dbConnection()
   });
 
 //===Error Handling
+// @desc Handle unhandled routes and send error into Error handling middleware.
+app.all('*', (req, res, next) => {
+  // Create error and send it to global error handling middleware.
+  next(new ApiError(`Cant find this rout ${req.originalUrl}`, 400));
+});
 
-app.use(globalErorrHandlingMidleware); // Global error handling middleware, you must use it after mount routs
+// Global error handling middleware, you must use it after mount routs
+app.use(globalErorrHandlingMidleware);
 
 // @desc  Handle errors outside express unhandle rejections.
 process.on('unhandledRejection', (err) => {
