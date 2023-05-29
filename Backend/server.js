@@ -1,8 +1,8 @@
 'use strict';
-const { express, dotenv } = require('./ourPackages');
-
+const { express, dotenv, bodyParser } = require('./ourPackages.js');
+const accountRoutes =require('./Account/accountRoutes.js');
 //===== DB
-const dbConnection = require('./config/database');
+const dbConnection = require('./config/database.js');
 
 //==== Enviroment
 dotenv.config({ path: 'config.env' });
@@ -13,12 +13,14 @@ dotenv.config({ path: 'config.env' });
 const app = express();
 
 // Middlewares
+app.use(bodyParser.json());
+
 
 // Mount Routes
 app.get('/', (req, res) => {
   res.send('Test test the server 😁');
 });
-
+app.use('/api/v1/account', accountRoutes);
 //==== Connect the DB
 dbConnection()
   .then(() => {
