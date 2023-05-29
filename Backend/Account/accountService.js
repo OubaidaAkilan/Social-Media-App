@@ -1,6 +1,7 @@
 'use strict';
 const { asyncHandler, slugify } = require('../ourPackages.js');
 const userModel = require('../User/userModel.js');
+const ApiError = require('../ErrorHandler/ApiError.js');
 
 // @desc    Create new user
 // @route   Post /api/v1/account
@@ -15,16 +16,18 @@ exports.register = asyncHandler(async (req, res) => {
     name: slugify(username),
   });
 
-  if (!user)
-    res.status(503).json({ Error: 'You can not sign up now try later' });
+  if (!user) next(new ApiError(`You cann't sign up now, try later `, 503));
   res.status(201).json({ data: user });
 });
 
 // @desc    Sign in user
 // @route   Post /api/v1/auth
 // @access  Public
-exports.login = asyncHandler(async (req,res,next) => {
-
+exports.login = asyncHandler(async (req, res) => {
+  console.log('ffffffffffffffffffffff');
+  res.status(200).json({
+    token: req.token,
+  });
 });
 
 // @desc    Logout user

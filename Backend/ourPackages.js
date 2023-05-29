@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 const slugify = require('slugify');
 const asyncHandler = require('express-async-handler');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const cors = require('cors');
 module.exports = {
   express,
   dotenv,
@@ -13,4 +15,5 @@ module.exports = {
   slugify,
   asyncHandler,
   bodyParser,
+  morgan,
 };

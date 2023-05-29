@@ -1,5 +1,5 @@
 'use strict';
-const { express, dotenv, bodyParser } = require('./ourPackages.js');
+const { express, dotenv, morgan } = require('./ourPackages.js');
 const accountRoutes = require('./Account/accountRoutes.js');
 const globalErorrHandlingMidleware = require('./ErrorHandler/globalErorrHandlingMidleware.js');
 const ApiError = require('./ErrorHandler/ApiError.js');
@@ -16,7 +16,15 @@ dotenv.config({ path: 'config.env' });
 const app = express();
 
 // Middlewares
-app.use(bodyParser.json());
+
+// we parse the data within body request from string into json
+app.use(express.json());
+
+if (process.env.NODE_ENV === 'development') {
+  //==== Check The Mode Of Enviroments
+  app.use(morgan('tiny'));
+  console.log(` Mode : ${process.env.NODE_ENV} `);
+}
 
 // Mount Routes
 app.get('/', (req, res) => {
