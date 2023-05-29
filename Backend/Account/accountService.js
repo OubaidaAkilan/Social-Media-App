@@ -1,6 +1,6 @@
 'use strict';
-const { asyncHandler, slugify } = require('../ourPackages.js');
 const userModel = require('../User/userModel.js');
+const { asyncHandler, slugify } = require('../ourPackages.js');
 const ApiError = require('../ErrorHandler/ApiError.js');
 
 // @desc    Create new user

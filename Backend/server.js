@@ -1,6 +1,9 @@
 'use strict';
 const { express, dotenv, morgan } = require('./ourPackages.js');
+
 const accountRoutes = require('./Account/accountRoutes.js');
+const userRoutes = require('./User/userRoutes.js');
+
 const globalErorrHandlingMidleware = require('./ErrorHandler/globalErorrHandlingMidleware.js');
 const ApiError = require('./ErrorHandler/ApiError.js');
 
@@ -31,6 +34,7 @@ app.get('/', (req, res) => {
   res.send('Test test the server 😁');
 });
 app.use('/api/v1/account', accountRoutes);
+app.use('/api/v1/users', userRoutes);
 
 //==== Connect the DB
 dbConnection()
