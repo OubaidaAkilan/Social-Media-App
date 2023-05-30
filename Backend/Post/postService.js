@@ -57,36 +57,6 @@ exports.getPost = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @desc   Update a post
-// @route  Get /api/v1/post/:id
-// @access private
-exports.updatePost = asyncHandler(async (req, res, next) => {
-  try {
-    const post = await postModel.findById(req.params.id);
-    if (!post) next(new ApiError(`There is an server issue  `, 500));
-
-    if (post.user._id.equals(req.user._id)) {
-      next(new ApiError(`You aren't allowed to update this post`, 403));
-      // res.status(403).json({data : })
-    }
-
-    const postUpdated = await postModel.findByIdAndUpdate(
-      { _id: post._id },
-      {
-        desc: req.body.desc,
-        imgPost: req.body.imgPost,
-        user: req.user._id, // from bearer auth
-      },
-      { new: true }
-    );
-
-    if (!postUpdated) return next(new ApiError(`The post can't update`, 404));
-    res.status(200).json({ data: postUpdated });
-  } catch (error) {
-    next(new ApiError(`There is an server issue ${error}  `, 500));
-  }
-});
-
 // @desc   Create a new post
 // @route  Post /api/v1/post
 // @access Private
@@ -100,4 +70,56 @@ exports.createPost = asyncHandler(async (req, res, next) => {
   if (!post)
     next(new ApiError(`You cann't create a post now, try later `, 503));
   res.status(201).json({ data: post });
+});
+
+// @desc   Update a post
+// @route  Put /api/v1/post/:id
+// @access private
+exports.updatePost = asyncHandler(async (req, res, next) => {
+  try {
+    const post = await postModel.findById(req.params.id);
+    if (!post) return next(new ApiError(`The  post is not exist`, 404));
+
+    if (!post.user._id.equals(req.user._id))
+      return next(new ApiError(`You aren't allowed to update this post`, 403));
+
+    const postUpdated = await postModel.findByIdAndUpdate(
+      { _id: post._id },
+      {
+        desc: req.body.desc,
+        imgPost: req.body.imgPost,
+        user: req.user._id, // from bearer auth
+      },
+      { new: true }
+    );
+
+    if (!postUpdated) return next(new ApiError(`The  post is not exist`, 404));
+    res.status(200).json({ data: postUpdated });
+  } catch (error) {
+    next(new ApiError(`There is an server issue ${error}  `, 500));
+  }
+});
+
+// @desc   Delete a post
+// @route  Delete /api/v1/post/:id
+// @access private
+exports.deletePost = asyncHandler(async (req, res, next) => {
+  try {
+    const post = await postModel.findById(req.params.id);
+
+    if (!post) return next(new ApiError(`The  post is not exist `, 404));
+
+    if (!post.user._id.equals(req.user._id))
+      return next(new ApiError(`You aren't allowed to delete this post`, 403));
+
+    const postDeleted = await postModel.deleteOne(
+      { _id: post._id },
+      { new: true }
+    );
+
+    if (!postDeleted) return next(new ApiError(`The  post is not exist`, 404));
+    res.status(200).json({ data: postDeleted });
+  } catch (error) {
+    next(new ApiError(`There is an server issue ${error}  `, 500));
+  }
 });
