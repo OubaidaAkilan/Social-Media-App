@@ -3,6 +3,7 @@ const { express, dotenv, morgan } = require('./ourPackages.js');
 
 const accountRoutes = require('./Account/accountRoutes.js');
 const userRoutes = require('./User/userRoutes.js');
+const postRoutes = require('./Post/postRoutes.js');
 
 const globalErorrHandlingMidleware = require('./ErrorHandler/globalErorrHandlingMidleware.js');
 const ApiError = require('./ErrorHandler/ApiError.js');
@@ -35,6 +36,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/v1/account', accountRoutes);
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/post', postRoutes);
 
 //==== Connect the DB
 dbConnection()

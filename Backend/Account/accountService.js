@@ -24,7 +24,6 @@ exports.register = asyncHandler(async (req, res) => {
 // @route   Post /api/v1/auth
 // @access  Public
 exports.login = asyncHandler(async (req, res) => {
-  console.log('ffffffffffffffffffffff');
   res.status(200).json({
     token: req.token,
   });
