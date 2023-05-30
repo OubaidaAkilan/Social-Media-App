@@ -14,13 +14,77 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
   const limit = req.query.limit * 1 || 5;
   const skip = (page - 1) * limit;
   const posts = await postModel.find({}).skip(skip).limit(limit);
-  if (!posts)
-    next(new ApiError(`There is an server issue  `, 500));
+  if (!posts) next(new ApiError(`There is an server issue  `, 500));
   res.status(200).json({
     results: posts.length,
     page,
     data: posts,
   });
+});
+
+// @desc   Get list of my posts
+// @route  Get /api/v1/post/recent-posts
+// @access public
+exports.getRecentPosts = asyncHandler(async (req, res, next) => {
+  // (req.query.page * 1) means convert the string into integer number
+
+  const page = req.query.page * 1 || 1;
+  const limit = req.query.limit * 1 || 5;
+  const skip = (page - 1) * limit;
+  const posts = await postModel
+    .find({ user: req.user._id })
+    .skip(skip)
+    .limit(limit);
+  if (!posts) next(new ApiError(`There is an server issue  `, 500));
+  res.status(200).json({
+    results: posts.length,
+    page,
+    data: posts,
+  });
+});
+
+// @desc   Get a post
+// @route  Get /api/v1/post/:id
+// @access public
+exports.getPost = asyncHandler(async (req, res, next) => {
+  const post = await postModel.findById(req.params.id).populate({
+    path: 'user',
+    select: 'name -_id',
+  });
+  if (!post) next(new ApiError(`There is an server issue  `, 500));
+  res.status(200).json({
+    data: post,
+  });
+});
+
+// @desc   Update a post
+// @route  Get /api/v1/post/:id
+// @access private
+exports.updatePost = asyncHandler(async (req, res, next) => {
+  try {
+    const post = await postModel.findById(req.params.id);
+    if (!post) next(new ApiError(`There is an server issue  `, 500));
+
+    if (post.user._id.equals(req.user._id)) {
+      next(new ApiError(`You aren't allowed to update this post`, 403));
+      // res.status(403).json({data : })
+    }
+
+    const postUpdated = await postModel.findByIdAndUpdate(
+      { _id: post._id },
+      {
+        desc: req.body.desc,
+        imgPost: req.body.imgPost,
+        user: req.user._id, // from bearer auth
+      },
+      { new: true }
+    );
+
+    if (!postUpdated) return next(new ApiError(`The post can't update`, 404));
+    res.status(200).json({ data: postUpdated });
+  } catch (error) {
+    next(new ApiError(`There is an server issue ${error}  `, 500));
+  }
 });
 
 // @desc   Create a new post
