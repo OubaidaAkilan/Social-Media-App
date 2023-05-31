@@ -17,6 +17,13 @@ const postSchema = new mongoose.Schema(
       ref: 'User',
       required: [true, 'User of post is required'],
     },
+
+    //   relations
+
+    comments: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment',
+    }],
   },
   { timestamps: true }
 );
