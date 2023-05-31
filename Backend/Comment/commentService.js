@@ -1,8 +1,8 @@
 'use strict';
+const commentModel = require('./commentModel.js');
 const { asyncHandler } = require('../ourPackages.js');
 const ApiError = require('../ErrorHandler/ApiError.js');
 
-const commentModel = require('./commentModel.js');
 
 // Nested route
 exports.setPostIdToBody = (req, res, next) => {

@@ -1,6 +1,11 @@
 'use strict';
 const userModel = require('./userModel');
-const { asyncHandler, slugify, bcrybt } = require('../ourPackages.js');
+const {
+  asyncHandler,
+  slugify,
+  bcrybt,
+  mongoose,
+} = require('../ourPackages.js');
 const ApiError = require('../ErrorHandler/ApiError.js');
 
 // @desc    Get a list of Users
@@ -26,7 +31,28 @@ exports.getUsers = asyncHandler(async (req, res) => {
 // @access  Private
 exports.getUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const user = await userModel.find({ _id: id });
+  const user = await userModel.findById({ _id: id });
+  // const user = await userModel.aggregate([
+  //   {
+  //     $match: {
+  //       _id: new mongoose.Types.ObjectId(id), // Convert userId to ObjectId if needed
+  //     },
+  //   },
+  //   {
+  //     /* In this example, the $lookup stage is used to perform the join between 
+  // the User collection and the posts collection based on the posts field in the User model 
+  // and the _id field in the Post model.
+  // The localField parameter specifies the field from the User model to match,
+  // and the foreignField parameter specifies the field from the Post model to match. */
+  //     $lookup: {
+  //       from: 'posts', // Name of the collection where the 'Post' documents are stored
+  //       localField: 'posts',
+  //       foreignField: 'user._id',
+  //       as: 'posts',
+  //     },
+  //   },
+  // ]);
+
   if (!user) return next(`The user isn't exist`, 404);
   res.status(200).json({ data: user });
 });
@@ -62,7 +88,6 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
       name: slugify(username),
       slug: slugify(username),
       email: req.body.email,
-      
     },
     {
       new: true,
