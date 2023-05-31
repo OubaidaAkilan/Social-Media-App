@@ -1,6 +1,6 @@
 'use strict';
+const commentModel = require('../Comment/commentModel.js');
 const mongoose = require('mongoose');
-const commentModel = require('../Comment/commentModel');
 
 const postSchema = new mongoose.Schema(
   {
@@ -19,11 +19,13 @@ const postSchema = new mongoose.Schema(
     },
 
     //   relations
+comments: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment',
+  }
+],
 
-    comments: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Comment',
-    }],
   },
   { timestamps: true }
 );
