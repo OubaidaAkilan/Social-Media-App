@@ -3,7 +3,7 @@ const { mongoose } = require('../ourPackages');
 
 const followerSchema = new mongoose.Schema(
   {
-    follower: {
+    followers: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
