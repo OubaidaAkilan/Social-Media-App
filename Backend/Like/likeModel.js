@@ -6,7 +6,7 @@ const likeSchema = mongoose.Schema(
   {
     desc: {
       type: String,
-      required: [true, 'Description of like is required'],
+      required: [false, 'Description of like is required'],
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
