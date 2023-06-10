@@ -4,7 +4,7 @@ const { mongoose, bcrypt } = require('../ourPackages');
 const postModel = require('../Post/postModel');
 const commentModel = require('../Comment/commentModel');
 const storyModel = require('../Story/storyModel');
-const followerModel = require('../Follower/followerSchema');
+const followerModel = require('../Follower/followerModel');
 const likeModel = require('../Like/likeModel');
 
 //1- Create Shema

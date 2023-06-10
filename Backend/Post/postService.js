@@ -1,5 +1,4 @@
 'use strict';
-const commentModel =require('../Comment/commentModel.js');
 const { asyncHandler, mongoose } = require('../ourPackages.js');
 const ApiError = require('../ErrorHandler/ApiError.js');
 const postModel = require('./postModel.js');
