@@ -37,3 +37,13 @@ exports.deleteLike = asyncHandler(async (req, res, next) => {
   if (!unlike) return next(new ApiError(`You can't unlike`, 503));
   res.status(200).json({ data: true });
 });
+
+exports.noOfLikes = asyncHandler(async (req, res, next) => {
+  const { postId } = req.body;
+
+  const likes = await likeModel.find({
+    post: postId,
+  });
+  if (!likes) return next(new ApiError(`You can't like now`, 503));
+  res.status(201).json({ data: likes.length });
+});
