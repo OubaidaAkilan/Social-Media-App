@@ -6,6 +6,7 @@ const userRoutes = require('./User/userRoutes.js');
 const postRoutes = require('./Post/postRoutes.js');
 const storyRoutes = require('./Story/storyRoutes.js');
 const commentRoutes = require('./Comment/commentRoutes.js');
+const followerRoutes = require('./Follower/followerRoutes.js');
 
 
 const globalErorrHandlingMidleware = require('./ErrorHandler/globalErorrHandlingMidleware.js');
@@ -42,7 +43,7 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/post', postRoutes);
 app.use('/api/v1/story', storyRoutes);
 app.use('/api/v1/comment', commentRoutes);
-
+app.use('/api/v1/follower', followerRoutes);
 
 //==== Connect the DB
 dbConnection()
