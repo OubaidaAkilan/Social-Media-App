@@ -1,6 +1,11 @@
 const { express } = require('../ourPackages.js');
 const bearerAuth = require('../Auth/bearerAuth.js');
-const {getLikes, addLike, deleteLike } = require('./likeServices.js');
+const {
+  getLikes,
+  addLike,
+  deleteLike,
+  noOfLikes,
+} = require('./likeServices.js');
 const router = express.Router();
 
 router
@@ -9,4 +14,5 @@ router
   .post(bearerAuth, addLike)
   .delete(bearerAuth, deleteLike);
 
+router.get('/no-of-likes', noOfLikes);
 module.exports = router;
