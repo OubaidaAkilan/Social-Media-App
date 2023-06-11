@@ -14,8 +14,8 @@ exports.register = asyncHandler(async (req, res, next) => {
   if (validUser) return next(new ApiError(`User already exists`, 409));
   //CREATE USER
   //Hash password 123 => fasdfasdfsda
-  
-  const hashPwd =await bcrypt.hash(password, 10);
+
+  const hashPwd = await bcrypt.hash(password, 10);
   const user = await userModel.create({
     username,
     slug: slugify(username),
@@ -33,12 +33,25 @@ exports.register = asyncHandler(async (req, res, next) => {
 // @route   Post /api/v1/auth
 // @access  Public
 exports.login = asyncHandler(async (req, res) => {
-  res.status(200).json({
-    token: req.token,
-  });
+  const { password, ...others } = req.user;
+
+  res
+    .cookie('accessToken', req.token, {
+      httpOnly: true,
+    })
+    .status(200)
+    .json(others);
 });
 
 // @desc    Logout user
 // @route   Post /api/v1/auth
 // @access  Public
-exports.logout = asyncHandler(async () => {});
+exports.logout = asyncHandler(async (req, res) => {
+  res
+    .clearCookie('accessToken', {
+      secure: true,
+      sameSite: 'none',
+    })
+    .status(200)
+    .json('User has been logged out');
+});

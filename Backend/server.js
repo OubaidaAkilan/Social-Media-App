@@ -1,5 +1,11 @@
 'use strict';
-const { express, dotenv, morgan } = require('./ourPackages.js');
+const {
+  express,
+  dotenv,
+  morgan,
+  cookieParser,
+  cors,
+} = require('./ourPackages.js');
 
 const accountRoutes = require('./Account/accountRoutes.js');
 const userRoutes = require('./User/userRoutes.js');
@@ -8,8 +14,6 @@ const storyRoutes = require('./Story/storyRoutes.js');
 const commentRoutes = require('./Comment/commentRoutes.js');
 const followerRoutes = require('./Follower/followerRoutes.js');
 const likeRoutes = require('./Like/likeRoutes.js');
-
-
 
 const globalErorrHandlingMidleware = require('./ErrorHandler/globalErorrHandlingMidleware.js');
 const ApiError = require('./ErrorHandler/ApiError.js');
@@ -29,6 +33,8 @@ const app = express();
 
 // we parse the data within body request from string into json
 app.use(express.json());
+app.use(cors());
+app.use(cookieParser());
 
 if (process.env.NODE_ENV === 'development') {
   //==== Check The Mode Of Enviroments
@@ -47,7 +53,6 @@ app.use('/api/v1/story', storyRoutes);
 app.use('/api/v1/comment', commentRoutes);
 app.use('/api/v1/follower', followerRoutes);
 app.use('/api/v1/like', likeRoutes);
-
 
 //==== Connect the DB
 dbConnection()
