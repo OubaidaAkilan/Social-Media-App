@@ -7,6 +7,7 @@ const asyncHandler = require('express-async-handler');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 module.exports = {
   express,
   dotenv,
@@ -16,4 +17,6 @@ module.exports = {
   asyncHandler,
   bodyParser,
   morgan,
+  cors,
+  cookieParser,
 };
