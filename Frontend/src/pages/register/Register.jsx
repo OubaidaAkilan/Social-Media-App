@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 import './register.scss';
 import { useState } from 'react';
 
@@ -11,11 +11,21 @@ const Register = () => {
     name: '',
   });
 
+  const [err, setErr] = useState(null);
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  console.log(inputs);
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.post('http://localhost:3000/api/v1/account/register', inputs);
+    } catch (error) {
+      setErr(error.response.data);
+    }
+  };
+  console.log(err);
   return (
     <section className='social__register'>
       <div className='card'>
@@ -59,7 +69,7 @@ const Register = () => {
               onChange={handleChange}
             />
 
-            <button>Register</button>
+            <button onClick={handleRegister}>Register</button>
           </form>
         </div>
       </div>
