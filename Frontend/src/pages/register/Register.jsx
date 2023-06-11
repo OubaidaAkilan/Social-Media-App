@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './register.scss';
@@ -44,6 +45,7 @@ const Register = () => {
         <div className='right'>
           <h1>Register</h1>
           <form>
+
             <input
               type='text'
               placeholder='Username'
@@ -70,6 +72,7 @@ const Register = () => {
             />
 
             <button onClick={handleRegister}>Register</button>
+
           </form>
         </div>
       </div>

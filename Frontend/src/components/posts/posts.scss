@@ -1,0 +1,68 @@
+@import '../../style.scss';
+
+.social__posts {
+  @include themify($themes) {
+    display: flex;
+    flex-direction: column;
+    background-color: themed(bgSoft);
+    color: themed(textColor);
+    gap: 1rem;
+    .social_posts-post {
+      .container {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        background-color: themed(bg);
+        //user
+        .user {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          .userInfo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            img {
+              width: 50px;
+              height: 50px;
+              object-fit: cover;
+              border-radius: 50%;
+            }
+            .details {
+              display: flex;
+              flex-direction: column;
+              .date {
+                color: themed(textColorSoft);
+              }
+            }
+          }
+        }
+        //content
+        .content {
+          margin: 20px 0;
+          img {
+            width: 100%;
+            overflow: hidden;
+            object-fit: cover;
+            max-height: 500px;
+            margin-top: 20px;
+          }
+        }
+        //infoPost
+        .infoPost{
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            .item{
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                cursor: pointer;
+                font-size: 14px;
+            }
+        }
+      }
+    }
+  }
+}
