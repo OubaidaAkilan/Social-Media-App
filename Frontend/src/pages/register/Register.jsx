@@ -24,7 +24,6 @@ const Register = () => {
     try {
       await AxiosInstance.post('/register', inputs);
     } catch (error) {
-      console.log(error);
       setErr(error.response.data.message);
     }
   };
