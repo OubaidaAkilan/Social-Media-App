@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import AxiosInstance from '../../api/AxiosInstance.js';
+
 import './register.scss';
 import { useState } from 'react';
 
@@ -21,12 +22,13 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:3000/api/v1/account/register', inputs);
+      await AxiosInstance.post('/register', inputs);
     } catch (error) {
-      setErr(error.response.data);
+      console.log(error);
+      setErr(error.response.data.message);
     }
   };
-  console.log(err);
+
   return (
     <section className='social__register'>
       <div className='card'>
@@ -45,7 +47,6 @@ const Register = () => {
         <div className='right'>
           <h1>Register</h1>
           <form>
-
             <input
               type='text'
               placeholder='Username'
@@ -70,9 +71,8 @@ const Register = () => {
               name='name'
               onChange={handleChange}
             />
-
+            {err && <p>{err}</p>}
             <button onClick={handleRegister}>Register</button>
-
           </form>
         </div>
       </div>

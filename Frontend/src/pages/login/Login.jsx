@@ -1,12 +1,25 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './login.scss';
 import { AuthContext } from '../../context/AuthContext';
 const Login = () => {
+  const navigate = useNavigate();
   const { login } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [inputs, setInputs] = useState({
+    email: '',
+    password: '',
+  });
 
-  const handleLogin = () => {
-    login();
+  const handleLogin = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    await login(inputs);
+    navigate('/');
+  };
+
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
@@ -27,9 +40,21 @@ const Login = () => {
         <div className='right'>
           <h1>Login</h1>
           <form>
-            <input type='text' placeholder='Username' />
-            <input type='password' placeholder='Password' />
-            <button onClick={handleLogin}>Login</button>
+            <input
+              type='text'
+              placeholder='Email'
+              name='email'
+              onChange={handleChange}
+            />
+            <input
+              type='password'
+              placeholder='Password'
+              name='password'
+              onChange={handleChange}
+            />
+            <button onClick={handleLogin} disabled={isLoading}>
+              {isLoading ? 'loading ....' : 'Login'}
+            </button>
           </form>
         </div>
       </div>
