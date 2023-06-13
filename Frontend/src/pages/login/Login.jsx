@@ -1,22 +1,36 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.scss';
 import { AuthContext } from '../../context/AuthContext';
 const Login = () => {
-  const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
+  const navigate =useNavigate();
+  const { login, currentUser } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
   });
 
+  const [err, setErr] = useState(null);
   const handleLogin = async (e) => {
     setIsLoading(true);
     e.preventDefault();
-    await login(inputs);
-    navigate('/');
+    try {
+      await login(inputs);
+      setIsLoading(false);
+    } catch (error) {
+      setErr(error.response.data.message);
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    console.log('444444444');
+    if (currentUser) {
+      console.log('4444444445555');
+      navigate('/');
+    }
+  }, [currentUser]);
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -52,6 +66,7 @@ const Login = () => {
               name='password'
               onChange={handleChange}
             />
+            {err && <p>{err}</p>}
             <button onClick={handleLogin} disabled={isLoading}>
               {isLoading ? 'loading ....' : 'Login'}
             </button>
