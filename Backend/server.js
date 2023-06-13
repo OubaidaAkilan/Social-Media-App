@@ -34,7 +34,20 @@ const app = express();
 // we parse the data within body request from string into json
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors());
+//===== CORS
+const whitelist = ['http://localhost:3001'];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
 
 if (process.env.NODE_ENV === 'development') {
   //==== Check The Mode Of Enviroments
