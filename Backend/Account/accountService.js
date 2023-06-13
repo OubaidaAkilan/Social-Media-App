@@ -13,9 +13,8 @@ exports.register = asyncHandler(async (req, res, next) => {
   const validUser = await userModel.findOne({ email });
   if (validUser) return next(new ApiError(`User already exists`, 409));
   //CREATE USER
-  //Hash password 123 => fasdfasdfsda
+  //Hash password 123 => fasdfasdfsda I did that inside userModel before add it to the database.
 
-  const hashPwd = await bcrypt.hash(password, 10);
   const user = await userModel.create({
     username,
     slug: slugify(username),
@@ -33,14 +32,14 @@ exports.register = asyncHandler(async (req, res, next) => {
 // @route   Post /api/v1/auth
 // @access  Public
 exports.login = asyncHandler(async (req, res) => {
-  const { password, ...others } = req.user;
+  const { name, username, email, profilePic } = req.user;
 
   res
     .cookie('accessToken', req.token, {
       httpOnly: true,
     })
     .status(200)
-    .json(others);
+    .json({ name, username, email, profilePic });
 });
 
 // @desc    Logout user

@@ -1,5 +1,5 @@
 const userModel = require('./userModel');
-const bcrybt = require('bcryptjs');
+const bcrybt = require('bcrypt');
 const ApiError = require('../ErrorHandler/ApiError');
 
 const validateUser = async ({ email = null, password = null, id = null }) => {

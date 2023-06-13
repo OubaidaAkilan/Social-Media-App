@@ -32,9 +32,9 @@ const app = express();
 // Middlewares
 
 // we parse the data within body request from string into json
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
-app.use(cookieParser());
 
 if (process.env.NODE_ENV === 'development') {
   //==== Check The Mode Of Enviroments
