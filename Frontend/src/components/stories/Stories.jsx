@@ -29,16 +29,16 @@ const Stories = () => {
   const { currentUser } = useContext(AuthContext);
   return (
     <section className='social__stories'>
-      <div className='social__stories-story' >
-        <img src={currentUser.profilePic} alt='profilPic' />
+      <div className='social__stories-story'>
+        <img src={currentUser?.profilePic || storiesArr[0].img} alt='profilPic' />
         <span>{currentUser.name}</span>
         <button>+</button>
       </div>
       {storiesArr.map((story, index) => {
         return (
           <div className='social__stories-story' key={index}>
-            <img src={story.img} alt='story.img' />
-            <span>{story.name}</span>
+            <img src={story?.img} alt='story.img' />
+            <span>{story?.name}</span>
           </div>
         );
       })}

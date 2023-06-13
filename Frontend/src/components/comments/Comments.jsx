@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import './comments.scss';
+import AvatarImage from '../../assets/avatarImage.jpg';
+
 import { AuthContext } from '../../context/AuthContext';
 const Comments = ({ comment }) => {
   const { currentUser } = useContext(AuthContext);
@@ -24,17 +26,23 @@ const Comments = ({ comment }) => {
   return (
     <div className='social__comments'>
       <div className='social__comments-write'>
-        <img src={currentUser.profilePic} alt='profilePicture' />
+        <img
+          src={currentUser?.profilePic || AvatarImage}
+          alt='profilePicture'
+        />
         <input type='text' placeholder='Writ a comment' />
         <button>Send</button>
       </div>
       {commentsArr.map((comment, idx) => {
         return (
           <div className='social_comments-comment'>
-            <img src={comment.profilePicture} alt='profilePicture' />
+            <img
+              src={comment?.profilePicture || AvatarImage}
+              alt='profilePicture'
+            />
             <div className='commentInfo'>
-              <span>{comment.name}</span>
-              <p>{comment.desc}</p>
+              <span>{comment?.name}</span>
+              <p>{comment?.desc}</p>
             </div>
             <div className='commentDate'>1 hour ago</div>
           </div>

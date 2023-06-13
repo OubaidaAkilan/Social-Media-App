@@ -8,7 +8,8 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import profileImage from '../../assets/login.jpeg';
+import AvatarImage from '../../assets/avatarImage.jpg';
+
 import './navbar.scss';
 import { DarkModeContext } from '../../context/DarkModeContext';
 import { AuthContext } from '../../context/AuthContext';
@@ -45,8 +46,11 @@ const Navbar = () => {
         <EmailOutlinedIcon className='social__nav-icons' />
         <NotificationsNoneOutlinedIcon className='social__nav-icons' />
         <div className='social__nav-user'>
-          <img src={profileImage} alt='profileImage' />
-          <span>{currentUser.name}</span>
+          <img
+            src={currentUser?.profilePic || AvatarImage}
+            alt='profileImage'
+          />
+          <span>{currentUser?.name}</span>
         </div>
       </div>
     </nav>
