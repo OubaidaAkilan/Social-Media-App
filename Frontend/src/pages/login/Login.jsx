@@ -11,7 +11,7 @@ const Login = () => {
     password: '',
   });
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
     setIsLoading(true);
     e.preventDefault();
     await login(inputs);
