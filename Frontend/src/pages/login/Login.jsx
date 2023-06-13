@@ -4,11 +4,17 @@ import './login.scss';
 import { AuthContext } from '../../context/AuthContext';
 const Login = () => {
   const { login } = useContext(AuthContext);
-
+  const [inputs, setInputs] = useState({
+    username: '',
+    email: '',
+  });
   const handleLogin = () => {
     login();
   };
 
+  const handleChange = (e) => {
+    return;
+  };
   return (
     <section className='social__login'>
       <div className='card'>
@@ -27,8 +33,18 @@ const Login = () => {
         <div className='right'>
           <h1>Login</h1>
           <form>
-            <input type='text' placeholder='Username' />
-            <input type='password' placeholder='Password' />
+            <input
+              type='text'
+              placeholder='Email'
+              name='email'
+              onChange={handleChange}
+            />
+            <input
+              type='password'
+              placeholder='Password'
+              name='password'
+              onChange={handleChange}
+            />
             <button onClick={handleLogin}>Login</button>
           </form>
         </div>
