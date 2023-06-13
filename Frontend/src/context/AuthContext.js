@@ -1,4 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
+import AxiosInstance from '../api/AxiosInstance';
+import base64 from 'base-64';
 
 export const AuthContext = createContext();
 
@@ -7,18 +9,27 @@ export const AuthContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem('user')) || null
   );
 
-  const login = () => {
+  const login = async (inputs) => {
     //To DO
-    setCurrentUser({
-      id: 1,
-      name: 'Oubaida',
-      profilePic:
-        'https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    });
+    const encodedBase64Token = base64.encode(
+      `${inputs.email}:${inputs.password}`
+    );
+    const authorization = `Basic ${encodedBase64Token}`;
+
+    const res = await AxiosInstance.post(
+      '/login',
+      {},
+      {
+        headers: {
+          Authorization: authorization,
+        },
+      }
+    );
+    setCurrentUser(res.data);
   };
 
   useEffect(() => {
-    localStorage.setItem('user' ,JSON.stringify(currentUser));
+    localStorage.setItem('user', JSON.stringify(currentUser));
   }, [currentUser]);
 
   return (

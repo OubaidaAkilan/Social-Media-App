@@ -12,8 +12,9 @@ const Login = () => {
   });
 
   const handleLogin = async () => {
-    await login(inputs);
     setIsLoading(true);
+    e.preventDefault();
+    await login(inputs);
     navigate('/');
   };
 
