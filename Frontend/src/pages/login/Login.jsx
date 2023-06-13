@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './login.scss';
 import { AuthContext } from '../../context/AuthContext';
 const Login = () => {
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   const { login, currentUser } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
@@ -25,12 +25,10 @@ const Login = () => {
   };
 
   useEffect(() => {
-    console.log('444444444');
     if (currentUser) {
-      console.log('4444444445555');
       navigate('/');
     }
-  }, [currentUser]);
+  }, [currentUser, navigate]);
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));

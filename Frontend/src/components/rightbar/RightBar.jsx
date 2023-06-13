@@ -8,8 +8,8 @@ const RightBar = () => {
       <div className='social__rightBar-suggestion'>
         <div className='item'>
           <span>Suggestion for you</span>
-          {Array.from({ length: 2 }, () => (
-            <div className='user'>
+          {Array.from({ length: 2 }, (v,i) => (
+            <div className='user' key={i}>
               <div className='userInfo'>
                 <img src={profileImage} alt='userImge' />
                 <span>Jane Doe</span>
@@ -61,11 +61,11 @@ const RightBar = () => {
       <div className='social__rightBar-onlineFriends'>
         <div className='item'>
           <span>Online friends</span>
-          {Array.from({ length: 8 }, () => (
-            <div className='user'>
+          {Array.from({ length: 8 }, (v, i) => (
+            <div className='user' key={i}>
               <div className='userInfo'>
                 <img src={profileImage} alt='userImge' />
-                <div className="online"/>
+                <div className='online' />
                 <span>Jane Doe</span>
               </div>
             </div>

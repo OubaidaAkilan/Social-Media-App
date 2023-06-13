@@ -35,7 +35,7 @@ const Posts = () => {
     <section className='social__posts'>
       {posts.map((post, idx) => {
         return (
-          <div className='social_posts-post'>
+          <div className='social_posts-post' key={idx}>
             <Post post={post} key={idx} />
           </div>
         );
