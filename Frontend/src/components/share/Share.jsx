@@ -8,8 +8,11 @@ import AvatarImage from '../../assets/avatarImage.jpg';
 import './share.scss';
 const Share = () => {
   const { currentUser } = useContext(AuthContext);
+
   const cookies = new Cookies();
+
   const token = cookies.get('accessToken');
+
   const createPost = async (body) => {
     try {
       const response = await AxiosInstance.post(
@@ -35,8 +38,8 @@ const Share = () => {
 
   // Mutations
   const mutation = useMutation(
-    (newPost) => {
-      return createPost(newPost);
+    (postInfo) => {
+      return createPost(postInfo);
     },
 
     {
