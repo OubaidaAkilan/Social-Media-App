@@ -1,21 +1,81 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 import { AuthContext } from '../../context/AuthContext';
+import AxiosInstance from '../../api/AxiosInstance.js';
+import { Cookies } from 'react-cookie';
+
 import AvatarImage from '../../assets/avatarImage.jpg';
 import './share.scss';
 const Share = () => {
   const { currentUser } = useContext(AuthContext);
+  const cookies = new Cookies();
+  const token = cookies.get('accessToken');
+  const createPost = async (body) => {
+    try {
+      const response = await AxiosInstance.post(
+        '/post',
+        {
+          desc: body?.desc,
+          imgPost: body?.imgPost || '',
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data.data;
+    } catch (error) {
+      throw new Error('Failed to fetch posts');
+    }
+  };
+
+  // Access the client
+  const queryClient = useQueryClient();
+
+  // Mutations
+  const mutation = useMutation(
+    (newPost) => {
+      return createPost(newPost);
+    },
+
+    {
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries('posts');
+      },
+    }
+  );
+
+  const [file, setFile] = useState(null);
+  const [desc, setDesc] = useState('');
+
+  const handleShare = (e) => {
+    e.preventDefault();
+    mutation.mutate({
+      desc,
+    });
+  };
+
   return (
     <div className='social__share'>
       <div className='social__share-postInputs'>
         <img src={currentUser?.profilePic || AvatarImage} alt='profile-image' />
         <textarea
           name='post_desc'
-          placeholder={`What's on your mind ${currentUser?.name}`}></textarea>
+          placeholder={`What's on your mind ${currentUser?.name}`}
+          onChange={(e) => setDesc(e.target.value)}></textarea>
       </div>
       <hr />
       <div className='social__share-postButtons'>
         <div className='infoButtons'>
-          <button>
+          <input
+            type='file'
+            id='file'
+            style={{ display: 'none' }}
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+          <label htmlFor='file'>
             Add File
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -30,7 +90,7 @@ const Share = () => {
                 d='M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12l-3-3m0 0l-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z'
               />
             </svg>
-          </button>
+          </label>
           <button>
             Add Place
             <svg
@@ -69,7 +129,9 @@ const Share = () => {
             </svg>
           </button>
         </div>
-        <button className='share-btn'>Share</button>
+        <button className='share-btn' onClick={handleShare}>
+          Share
+        </button>
       </div>
     </div>
   );

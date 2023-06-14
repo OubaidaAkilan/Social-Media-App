@@ -36,7 +36,7 @@ exports.login = asyncHandler(async (req, res) => {
 
   res
     .cookie('accessToken', req.token, {
-      httpOnly: true,
+      httpOnly: false,
     })
     .status(200)
     .json({ name, username, email, profilePic });

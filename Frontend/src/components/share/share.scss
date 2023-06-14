@@ -55,7 +55,7 @@
         align-items: center;
         gap: 1rem;
 
-        button {
+        button ,label{
           background-color: themed(bg);
           border: none;
           color: themed(textColor);
