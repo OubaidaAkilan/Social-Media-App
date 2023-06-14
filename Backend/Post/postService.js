@@ -19,11 +19,34 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
   const posts = await postModel
     .aggregate([
       {
+        $lookup: {
+          from: 'users',
+          localField: 'user',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      {
+        $unwind: '$user', // Unwind the 'user' array to get individual user documents
+      },
+      {
+        $project: {
+          user: {
+            _id: '$user._id',
+            name: '$user.name',
+            profilePic: '$user.profilePic',
+            // Include other user fields you need
+          },
+        },
+      },
+      {
         /* In this example, the $lookup stage is used to perform the join between
-  the User collection and the posts collection based on the posts field in the User model
-  and the _id field in the Post model.
-  The localField parameter specifies the field from the User model to match,
-  and the foreignField parameter specifies the field from the Post model to match. */
+        the User collection and the posts collection based on the posts field in the User model
+        and the _id field in the Post model.
+        The localField parameter specifies the field from the User model to match,
+        and the foreignField parameter specifies the field from the Post model to match.
+      */
+
         $lookup: {
           from: 'comments', // Name of the collection where the 'Comment' documents are stored
           localField: 'comments',
@@ -38,6 +61,12 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
             },
           ],
           as: 'comments',
+        },
+      },
+
+      {
+        $sort: {
+          createdAt: -1, // Sort in descending order based on the 'createdAt' field
         },
       },
     ])
@@ -78,14 +107,12 @@ exports.getRecentPosts = asyncHandler(async (req, res, next) => {
 // @access public
 exports.getPost = asyncHandler(async (req, res, next) => {
   try {
-    const post = await postModel
-      .findById(req.params.id)
-      .populate({
-        path: 'comments',
-        select: 'desc -_id',
-      });
+    const post = await postModel.findById(req.params.id).populate({
+      path: 'comments',
+      select: 'desc -_id',
+    });
     console.log(post.comments);
-    if (!post)return next(new ApiError(`There is an server issue  `, 500));
+    if (!post) return next(new ApiError(`There is an server issue  `, 500));
     res.status(200).json({
       data: post,
     });
@@ -100,7 +127,7 @@ exports.createPost = asyncHandler(async (req, res, next) => {
   const { desc, imgPost } = req.body;
   const post = await postModel.create({
     desc,
-    imgPost,
+    imgPost ,
     user: req.user._id, // from bearer auth
   });
   if (!post)
