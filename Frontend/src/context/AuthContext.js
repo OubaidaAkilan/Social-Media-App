@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
     const authorization = `Basic ${encodedBase64Token}`;
 
     const res = await AxiosInstance.post(
-      '/login',
+      '/account/login',
       {},
       {
         headers: {

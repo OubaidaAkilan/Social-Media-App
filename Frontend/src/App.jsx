@@ -1,3 +1,5 @@
+import { QueryClient, QueryClientProvider } from 'react-query';
+
 import {
   createBrowserRouter,
   Navigate,
@@ -5,7 +7,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 
-import './App.scss'
+import './App.scss';
 import { useContext } from 'react';
 
 import Login from './pages/login/Login';
@@ -20,20 +22,23 @@ import { DarkModeContext } from './context/DarkModeContext';
 import { AuthContext } from './context/AuthContext';
 
 function App() {
-  const {currentUser} = useContext(AuthContext);
+  const queryClient = new QueryClient();
+  const { currentUser } = useContext(AuthContext);
 
   const { darkMode } = useContext(DarkModeContext);
 
   const Layout = () => {
     return (
-      <section className={`theme-${darkMode ? 'dark' : 'light'}`}>
-        <Navbar />
-        <div className='main' style={{ display: 'flex' }}>
-          <LeftBar />
-          <Outlet />
-          <RightBar />
-        </div>
-      </section>
+      <QueryClientProvider client={queryClient}>
+        <section className={`theme-${darkMode ? 'dark' : 'light'}`}>
+          <Navbar />
+          <div className='main' style={{ display: 'flex' }}>
+            <LeftBar />
+            <Outlet />
+            <RightBar />
+          </div>
+        </section>
+      </QueryClientProvider>
     );
   };
 
