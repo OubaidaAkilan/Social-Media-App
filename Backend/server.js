@@ -7,6 +7,9 @@ const {
   cors,
 } = require('./ourPackages.js');
 
+const path = require('path');
+const multer = require('multer');
+
 const accountRoutes = require('./Account/accountRoutes.js');
 const userRoutes = require('./User/userRoutes.js');
 const postRoutes = require('./Post/postRoutes.js');
