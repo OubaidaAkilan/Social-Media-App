@@ -31,6 +31,8 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
       },
       {
         $project: {
+          _id:1,
+          desc:1,
           user: {
             _id: '$user._id',
             name: '$user.name',
