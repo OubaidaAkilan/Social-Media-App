@@ -15,16 +15,21 @@ import Messages from '../../assets/10.png';
 import Fundraiser from '../../assets/11.png';
 import Tutorials from '../../assets/12.png';
 import Courses from '../../assets/13.png';
+import AvatarImage from '../../assets/avatarImage.jpg';
+
 import { AuthContext } from '../../context/AuthContext';
 
 const LeftBar = () => {
-    const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <section className='social__leftBar'>
       <div className='container'>
         <div className='user'>
-          <Item img={currentUser.profilePic} title={currentUser.name} />
+          <Item
+            img={currentUser?.profilePic || AvatarImage}
+            title={currentUser?.name}
+          />
         </div>
         <div className='menu user'>
           <Item img={Friends} title={'Friends'} />

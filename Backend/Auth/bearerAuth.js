@@ -12,6 +12,7 @@ const bearerAuth = async (req, res, next) => {
     // console.log('Token >>> ',token);
 
     try {
+      console.log('user',1111111111);
       const user = await validateToken(token, next);
       if (user) {
         req.user = user;

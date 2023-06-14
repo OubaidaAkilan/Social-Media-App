@@ -22,9 +22,8 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await AxiosInstance.post('/register', inputs);
+      await AxiosInstance.post('/account/register', inputs);
     } catch (error) {
-      console.log(error);
       setErr(error.response.data.message);
     }
   };
