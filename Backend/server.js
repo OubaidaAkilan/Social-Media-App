@@ -14,7 +14,7 @@ const storyRoutes = require('./Story/storyRoutes.js');
 const commentRoutes = require('./Comment/commentRoutes.js');
 const followerRoutes = require('./Follower/followerRoutes.js');
 const likeRoutes = require('./Like/likeRoutes.js');
-
+const uploadRoutes = require('./Image/uploadImageRoutes.js');
 const globalErorrHandlingMidleware = require('./ErrorHandler/globalErorrHandlingMidleware.js');
 const ApiError = require('./ErrorHandler/ApiError.js');
 
@@ -48,7 +48,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-
 if (process.env.NODE_ENV === 'development') {
   //==== Check The Mode Of Enviroments
   app.use(morgan('tiny'));
@@ -66,6 +65,7 @@ app.use('/api/v1/story', storyRoutes);
 app.use('/api/v1/comment', commentRoutes);
 app.use('/api/v1/follower', followerRoutes);
 app.use('/api/v1/like', likeRoutes);
+app.use('/api/v1/upload', uploadRoutes);
 
 //==== Connect the DB
 dbConnection()
