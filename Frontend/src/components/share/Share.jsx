@@ -6,6 +6,7 @@ import { Cookies } from 'react-cookie';
 
 import AvatarImage from '../../assets/avatarImage.jpg';
 import './share.scss';
+import axios from 'axios';
 const Share = () => {
   const { currentUser } = useContext(AuthContext);
 
@@ -55,34 +56,49 @@ const Share = () => {
 
   const fileUploadHandler = async () => {
     const fd = new FormData();
-    fd.append('file', file, file.name);
-    try {
-      const res = await AxiosInstance.post('/upload', fd, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(res.data, 'res.data');
-      return res.data;
-    } catch (error) {
-      throw new Error('Failed to upload Image');
+
+
+    if (file) {
+      fd.append('file', file, file.name);
+      try {
+        const res = await axios.post(
+          'http://localhost:3000/api/v1/upload',
+          fd,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(res.data, 'res.data');
+        return res.data;
+      } catch (error) {
+        throw new Error('Failed to upload Image');
+      }
     }
   };
 
   const handleShare = async (e) => {
     e.preventDefault();
     let imageUrl = '';
-    if (file) imageUrl = await fileUploadHandler();
-    mutation.mutate({
-      desc,
-      imgPost: imageUrl,
-    });
+    try {
+      if (file) {
+        imageUrl = await fileUploadHandler();
+      }
+      mutation.mutate({
+        desc,
+        imgPost: imageUrl,
+      });
+    } catch (error) {
+      console.error(error);
+      // Handle the error appropriately
+    }
   };
 
   return (
     <div className='social__share'>
       <div className='social__share-postInputs'>
-        <img src={currentUser?.profilePic || AvatarImage} alt='profile-image' />
+        <img src={currentUser?.profilePic || AvatarImage} alt='free profile' />
         <textarea
           name='post_desc'
           placeholder={`What's on your mind ${currentUser?.name}`}
