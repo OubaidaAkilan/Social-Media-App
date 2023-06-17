@@ -41,6 +41,12 @@
         }
       }
     }
+
+    .social__share-file {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+    }
     hr {
       border-color: rgba(0, 0, 0, 0.1);
     }
@@ -55,7 +61,8 @@
         align-items: center;
         gap: 1rem;
 
-        button ,label{
+        button,
+        label {
           background-color: themed(bg);
           border: none;
           color: themed(textColor);
