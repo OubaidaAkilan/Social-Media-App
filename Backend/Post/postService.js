@@ -31,8 +31,9 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
       },
       {
         $project: {
-          _id:1,
-          desc:1,
+          _id: 1,
+          desc: 1,
+          imgPost: 1,
           user: {
             _id: '$user._id',
             name: '$user.name',
@@ -129,7 +130,7 @@ exports.createPost = asyncHandler(async (req, res, next) => {
   const { desc, imgPost } = req.body;
   const post = await postModel.create({
     desc,
-    imgPost ,
+    imgPost,
     user: req.user._id, // from bearer auth
   });
   if (!post)

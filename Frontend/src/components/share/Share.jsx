@@ -3,10 +3,10 @@ import { useMutation, useQueryClient } from 'react-query';
 import { AuthContext } from '../../context/AuthContext';
 import AxiosInstance from '../../api/AxiosInstance.js';
 import { Cookies } from 'react-cookie';
-
+import axios from 'axios';
 import AvatarImage from '../../assets/avatarImage.jpg';
 import './share.scss';
-import axios from 'axios';
+
 const Share = () => {
   const { currentUser } = useContext(AuthContext);
 
@@ -109,7 +109,7 @@ const Share = () => {
         <img
           className='social__share-file'
           src={URL.createObjectURL(file)}
-          alt='post-image'
+          alt='post'
         />
       )}
       <hr />
