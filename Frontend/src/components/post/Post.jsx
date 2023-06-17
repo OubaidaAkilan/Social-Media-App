@@ -6,7 +6,7 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Link } from 'react-router-dom';
 import Comments from '../comments/Comments';
-
+const urlpostImages = '../../../public/imagesUpload';
 const Post = ({ post }) => {
   const [openComment, setOpenComment] = useState(false);
   return (
@@ -27,7 +27,8 @@ const Post = ({ post }) => {
       </div>
       <div className='content'>
         <p className='desc'>{post?.desc}</p>
-        <img src={post?.imgPost} alt='profilePic' />
+        {console.log(post?.imgPost)}
+        <img src={'./imagesUpload/' + post?.imgPost} alt='img-Post' />
       </div>
       <div className='infoPost'>
         <div className='item'>
