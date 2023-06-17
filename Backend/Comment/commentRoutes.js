@@ -6,7 +6,9 @@ const { setPostIdToBody, getComments, createComment, deleteComment, updateCommen
 
 
 
-const router = express.Router();
+
+// Nesting routers as middleware is commonplace. To keep the parent req.params, you need to add { mergeParams: true } in to the child router.
+const router = express.Router({ mergeParams: true });
 
 
 router
@@ -15,10 +17,12 @@ router
   .post(bearerAuth, setPostIdToBody, createComment);
 
 
+
 router
   .route('/:id')
-  .delete(bearerAuth,  deleteComment)
-  .put(bearerAuth,  updateComment);
+  .get(bearerAuth, setPostIdToBody, getComments)
+  .delete(bearerAuth, deleteComment)
+  .put(bearerAuth, updateComment);
 
 
 module.exports = router;

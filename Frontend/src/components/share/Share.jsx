@@ -4,6 +4,9 @@ import { AuthContext } from '../../context/AuthContext';
 import AxiosInstance from '../../api/AxiosInstance.js';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
+
+
+
 import AvatarImage from '../../assets/avatarImage.jpg';
 import './share.scss';
 
@@ -55,6 +58,7 @@ const Share = () => {
   const [desc, setDesc] = useState('');
 
   const fileUploadHandler = async () => {
+
     if (file) {
       try {
         const fd = new FormData();
@@ -73,6 +77,7 @@ const Share = () => {
       } catch (error) {
         throw new Error('Failed to upload Image');
       }
+
     }
   };
 

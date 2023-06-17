@@ -3,7 +3,6 @@ const commentModel = require('./commentModel.js');
 const { asyncHandler } = require('../ourPackages.js');
 const ApiError = require('../ErrorHandler/ApiError.js');
 
-
 // Nested route
 exports.setPostIdToBody = (req, res, next) => {
   req.body.post ||= req.params.postId;
@@ -11,10 +10,13 @@ exports.setPostIdToBody = (req, res, next) => {
 };
 
 // @desc    Get a list of comments
-// @route   GET /api/v1/comment
+// @route   GET /api/v1/post/:postId/comments
 // @access  Public
 exports.getComments = asyncHandler(async (req, res, next) => {
-  const comments = await commentModel.find({ post: req.body.post });
+  const comments = await commentModel.find({ post: req.body.post }).populate({
+    path: 'user',
+    select: 'username profilePic -_id',
+  });
   if (!comments) return next(new ApiError(`There is an server issue  `, 500));
   res.status(200).json({
     results: comments.length,
@@ -23,14 +25,14 @@ exports.getComments = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Create comment
-// @route   POST /api/v1/comment
+// @route   POST /api/v1/post/:postId/comments
 // @access  public
 exports.createComment = asyncHandler(async (req, res, next) => {
-  const { desc, post } = req.body;
+  const { desc } = req.body;
 
   const comment = await commentModel.create({
     desc,
-    post: post,
+    post: req.params.postId,
     user: req.user._id,
   });
 
@@ -42,7 +44,7 @@ exports.createComment = asyncHandler(async (req, res, next) => {
 });
 
 // @desc   Update a comment
-// @route  Put /api/v1/comment/:id
+// @route  Put /api/v1/post/:postId/comments/:id
 // @access private
 exports.updateComment = asyncHandler(async (req, res, next) => {
   try {
@@ -73,7 +75,7 @@ exports.updateComment = asyncHandler(async (req, res, next) => {
 });
 
 // @desc   Delete a comment
-// @route  Delete /api/v1/comment/:id
+// @route  Delete /api/v1/post/:postId/comments/:id
 // @access private
 exports.deleteComment = asyncHandler(async (req, res, next) => {
   try {
@@ -93,7 +95,7 @@ exports.deleteComment = asyncHandler(async (req, res, next) => {
 
     if (!commentDeleted)
       return next(new ApiError(`The  comment is not exist`, 404));
-    res.status(200).json({ data: commentDeleted });
+    res.status(204).json({ data: commentDeleted });
   } catch (error) {
     next(new ApiError(`There is an server issue ${error}  `, 500));
   }
