@@ -1,5 +1,5 @@
 const express = require('express');
-const upload = require('./uploadImageModeljs');
+const upload = require('./uploadImageModel.js');
 const { uploadImage } = require('./uploadImageService');
 
 const router = express.Router();
