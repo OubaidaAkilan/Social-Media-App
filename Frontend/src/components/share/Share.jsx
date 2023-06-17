@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { AuthContext } from '../../context/AuthContext';
 import AxiosInstance from '../../api/AxiosInstance.js';
 import { Cookies } from 'react-cookie';
+import axios from 'axios';
 
 import AvatarImage from '../../assets/avatarImage.jpg';
 import './share.scss';
@@ -57,7 +58,7 @@ const Share = () => {
     const fd = new FormData();
     fd.append('file', file, file.name);
     try {
-      const res = await AxiosInstance.post('/upload', fd, {
+      const res = await axios.post('http://localhost:3000/api/v1/upload', fd, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
