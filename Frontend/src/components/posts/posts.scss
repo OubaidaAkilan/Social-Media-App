@@ -47,20 +47,21 @@
             object-fit: cover;
             max-height: 500px;
             margin-top: 20px;
+            border-radius: 10px;
           }
         }
         //infoPost
-        .infoPost{
+        .infoPost {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+          .item {
             display: flex;
             align-items: center;
-            gap: 2rem;
-            .item{
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                cursor: pointer;
-                font-size: 14px;
-            }
+            gap: 1rem;
+            cursor: pointer;
+            font-size: 14px;
+          }
         }
       }
     }

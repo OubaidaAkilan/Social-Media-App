@@ -55,11 +55,10 @@ const Share = () => {
   const [desc, setDesc] = useState('');
 
   const fileUploadHandler = async () => {
-    const fd = new FormData();
-
     if (file) {
-      fd.append('file', file, file.name);
       try {
+        const fd = new FormData();
+        fd.append('file', file, file.name);
         const res = await axios.post(
           'http://localhost:3000/api/v1/upload',
           fd,
@@ -79,6 +78,7 @@ const Share = () => {
 
   const handleShare = async (e) => {
     e.preventDefault();
+
     let imageUrl = '';
     try {
       if (file) {
@@ -88,6 +88,8 @@ const Share = () => {
         desc,
         imgPost: imageUrl,
       });
+      setDesc('');
+      setFile(null);
     } catch (error) {
       console.error(error);
       // Handle the error appropriately
@@ -117,7 +119,10 @@ const Share = () => {
             type='file'
             id='file'
             style={{ display: 'none' }}
-            onChange={(e) => setFile(e.target.files[0])}
+            onChange={(e) => {
+              e.preventDefault();
+              setFile(e.target.files[0]);
+            }}
           />
           <label htmlFor='file'>
             Add File
