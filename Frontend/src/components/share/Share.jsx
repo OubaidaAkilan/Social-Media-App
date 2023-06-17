@@ -57,7 +57,6 @@ const Share = () => {
   const fileUploadHandler = async () => {
     const fd = new FormData();
 
-
     if (file) {
       fd.append('file', file, file.name);
       try {
@@ -104,6 +103,13 @@ const Share = () => {
           placeholder={`What's on your mind ${currentUser?.name}`}
           onChange={(e) => setDesc(e.target.value)}></textarea>
       </div>
+      {file && (
+        <img
+          className='social__share-file'
+          src={URL.createObjectURL(file)}
+          alt='post-image'
+        />
+      )}
       <hr />
       <div className='social__share-postButtons'>
         <div className='infoButtons'>
