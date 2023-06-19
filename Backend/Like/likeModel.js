@@ -1,13 +1,8 @@
 'use strict';
-const { mongoose} = require('../ourPackages');
-
+const { mongoose } = require('../ourPackages');
 
 const likeSchema = mongoose.Schema(
   {
-    desc: {
-      type: String,
-      required: [false, 'Description of like is required'],
-    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',

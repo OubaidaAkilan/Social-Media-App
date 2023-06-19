@@ -32,14 +32,14 @@ exports.register = asyncHandler(async (req, res, next) => {
 // @route   Post /api/v1/auth
 // @access  Public
 exports.login = asyncHandler(async (req, res) => {
-  const { name, username, email, profilePic } = req.user;
+  const { name, username, email, profilePic,_id } = req.user;
 
   res
     .cookie('accessToken', req.token, {
       httpOnly: false,
     })
     .status(200)
-    .json({ name, username, email, profilePic });
+    .json({ name, username, email, profilePic ,_id});
 });
 
 // @desc    Logout user
