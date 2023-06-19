@@ -12,10 +12,7 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
   const page = req.query.page * 1 || 1;
   const limit = req.query.limit * 1 || 5;
   const skip = (page - 1) * limit;
-  // const posts = await postModel
-  //   .find({})
-  //   .skip(skip)
-  //   .limit(limit);
+
   const posts = await postModel
     .aggregate([
       {
@@ -52,9 +49,14 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
 
         $lookup: {
           from: 'comments', // Name of the collection where the 'Comment' documents are stored
-          localField: 'comments',
-          foreignField: 'comments._id',
+
+          let: { postId: '$_id' },
           pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ['$post', '$$postId'] },
+              },
+            },
             {
               $project: {
                 desc: 1,
@@ -112,6 +114,7 @@ exports.getPost = asyncHandler(async (req, res, next) => {
   try {
     const post = await postModel.findById(req.params.id).populate({
       path: 'comments',
+      match: { post: req.params.id },
       select: 'desc -_id',
     });
     console.log(post.comments);

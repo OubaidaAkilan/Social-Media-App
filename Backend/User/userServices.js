@@ -39,8 +39,8 @@ exports.getUser = asyncHandler(async (req, res) => {
   //     },
   //   },
   //   {
-  //     /* In this example, the $lookup stage is used to perform the join between 
-  // the User collection and the posts collection based on the posts field in the User model 
+  //     /* In this example, the $lookup stage is used to perform the join between
+  // the User collection and the posts collection based on the posts field in the User model
   // and the _id field in the Post model.
   // The localField parameter specifies the field from the User model to match,
   // and the foreignField parameter specifies the field from the Post model to match. */
@@ -52,9 +52,9 @@ exports.getUser = asyncHandler(async (req, res) => {
   //     },
   //   },
   // ]);
-
+  let { password, ...others } = user;
   if (!user) return next(`The user isn't exist`, 404);
-  res.status(200).json({ data: user });
+  res.status(200).json({ data: others._doc });
 });
 
 // @desc    Create a new user
