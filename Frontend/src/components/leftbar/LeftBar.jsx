@@ -18,6 +18,7 @@ import Courses from '../../assets/13.png';
 import AvatarImage from '../../assets/avatarImage.jpg';
 
 import { AuthContext } from '../../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const LeftBar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -26,10 +27,12 @@ const LeftBar = () => {
     <section className='social__leftBar'>
       <div className='container'>
         <div className='user'>
-          <Item
-            img={currentUser?.profilePic || AvatarImage}
-            title={currentUser?.name}
-          />
+          <Link to={`/profile/${currentUser._id}`}>
+            <Item
+              img={currentUser?.profilePic || AvatarImage}
+              title={currentUser?.name}
+            />
+          </Link>
         </div>
         <div className='menu user'>
           <Item img={Friends} title={'Friends'} />

@@ -10,18 +10,49 @@ import LanguageIcon from '@mui/icons-material/Language';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Posts from '../../components/posts/Posts';
+import AxiosInstance from '../../api/AxiosInstance';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
+// import { Cookies } from 'react-cookie';
 
 const Profile = () => {
+  // const cookies = new Cookies();
+  // const token = cookies.get('accessToken');
+
+  const { userId } = useParams();
+
+  const fetchUser = async () => {
+    try {
+      const res = await AxiosInstance.get(`/users/${userId}`);
+      console.log('res.data.data >>>', res.data.data);
+      return res.data.data;
+    } catch (error) {
+      throw new Error('Failed to fetch a user');
+    }
+  };
+
+  const { data: user, error, isError, isLoading } = useQuery('user', fetchUser);
+
+  if (isLoading) return 'Loading...';
+
+  if (isError) return 'An error has occurred: ' + error.message;
+
   return (
     <section className='social__profile'>
       <div className='social_profile-images'>
         <img
-          src='https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+          src={
+            user?.coverPic ||
+            'https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+          }
           alt='coverImage'
           className='cover'
         />
         <img
-          src='https://images.pexels.com/photos/14028501/pexels-photo-14028501.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load'
+          src={
+            user?.profilePic ||
+            'https://images.pexels.com/photos/14028501/pexels-photo-14028501.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load'
+          }
           alt='profileImage'
           className='profile'
         />
@@ -29,31 +60,31 @@ const Profile = () => {
       <div className='social__profile-info'>
         <div className='left'>
           <a href='http://facebook.com'>
-            <FacebookTwoToneIcon fontSize='large' />
+            <FacebookTwoToneIcon fontSize='medium' />
           </a>
           <a href='http://facebook.com'>
-            <InstagramIcon fontSize='large' />
+            <InstagramIcon fontSize='medium' />
           </a>
           <a href='http://facebook.com'>
-            <TwitterIcon fontSize='large' />
+            <TwitterIcon fontSize='medium' />
           </a>
           <a href='http://facebook.com'>
-            <LinkedInIcon fontSize='large' />
+            <LinkedInIcon fontSize='medium' />
           </a>
           <a href='http://facebook.com'>
-            <PinterestIcon fontSize='large' />
+            <PinterestIcon fontSize='medium' />
           </a>
         </div>
         <div className='center'>
-          <span>Jane Doe</span>
+          <span>{user?.username}</span>
           <div className='info'>
             <div className='item'>
               <PlaceIcon />
-              <span>USA</span>
+              <span>{user?.city || 'USA'}</span>
             </div>
             <div className='item'>
               <LanguageIcon />
-              <span>lama.dev</span>
+              <span>{user?.email}</span>
             </div>
           </div>
           <button>follow</button>
@@ -63,7 +94,6 @@ const Profile = () => {
           <MoreVertIcon />
         </div>
       </div>
-      <Posts />
     </section>
   );
 };

@@ -32,7 +32,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <section className={`theme-${darkMode ? 'dark' : 'light'}`}>
           <Navbar />
-          <div className='main' style={{ display: 'flex' }}>
+          <div className='main' >
             <LeftBar />
             <Outlet />
             <RightBar />
@@ -59,7 +59,7 @@ function App() {
       ),
       children: [
         { path: '/', element: <Home /> },
-        { path: '/profile/:id', element: <Profile /> },
+        { path: '/profile/:userId', element: <Profile /> },
       ],
     },
     {

@@ -3,7 +3,7 @@
 .social__profile {
   @include themify($themes) {
     background-color: themed(bgSoft);
-    flex: 6;
+
     padding: 0 5px 1rem 20px;
     position: sticky;
     top: 70px;
@@ -44,12 +44,13 @@
     // info
     .social__profile-info {
       background-color: themed(bg);
+      margin: 2rem 0;
+      height: 260px;
+      padding: 20px 40px;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin: 2rem 0;
-      height: 260px;
-      padding: 20px 70px;
       @include mobile {
         flex-direction: column;
         height: 30vh;
@@ -58,9 +59,10 @@
       }
     }
     .left {
-      flex: 1;
       display: flex;
+      flex: 1;
       gap: 10px;
+      
       @include tablet {
         flex-wrap: wrap;
       }
@@ -81,18 +83,22 @@
       }
 
       .info {
-        width: 100%;
+        width: auto;
         display: flex;
+        
         align-items: center;
-        justify-content: space-around;
+        justify-content: space-between;
 
         .item {
+          width: 50%;
           display: flex;
+          justify-content: flex-start;
           align-items: center;
           gap: 5px;
           color: themed('textColorSoft');
 
           span {
+            
             font-size: 12px;
           }
         }
