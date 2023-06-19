@@ -169,7 +169,7 @@ const Post = ({ post }) => {
             setOpenComment(!openComment);
           }}>
           <TextsmsOutlinedIcon />
-          12 Comments
+          {post.comments.length} Comments
         </div>
         <div className='item'>
           <ShareOutlinedIcon />
