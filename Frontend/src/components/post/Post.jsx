@@ -18,6 +18,8 @@ const Post = ({ post }) => {
 
   const token = cookies.get('accessToken');
 
+  const [liked, setLiked] = useState(null);
+
   //===Get Likes
 
   const fetchLikes = async (postId) => {
@@ -32,6 +34,7 @@ const Post = ({ post }) => {
         }
       );
       // console.log('response.data.data', response.data.data);
+      setLiked(response.data.data.includes(currentUser._id));
       return response.data.data;
     } catch (error) {
       throw new Error('Failed to fetch comments');
@@ -142,13 +145,21 @@ const Post = ({ post }) => {
       </div>
       <div className='infoPost'>
         <div className='item'>
-          {data.includes(currentUser._id) ? (
+          {liked ? (
             <FavoriteOutlinedIcon
               style={{ color: 'red' }}
-              onClick={handleLike}
+              onClick={(e) => {
+                setLiked(!liked);
+                handleLike(e);
+              }}
             />
           ) : (
-            <FavoriteBorderOutlinedIcon onClick={handleLike} />
+            <FavoriteBorderOutlinedIcon
+              onClick={(e) => {
+                setLiked(!liked);
+                handleLike(e);
+              }}
+            />
           )}
           {data.length} Likes
         </div>
