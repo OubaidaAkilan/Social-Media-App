@@ -14,6 +14,7 @@ import { useQuery, useQueryClient, useMutation } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import { AuthContext } from '../../context/AuthContext';
+import Update from '../../components/update/Update';
 
 const Profile = () => {
   const cookies = new Cookies();
@@ -21,6 +22,8 @@ const Profile = () => {
   const { currentUser } = useContext(AuthContext);
 
   const [stateFollow, setStateFollow] = useState(null);
+
+  const [openUpdate, setOpenUpdate] = useState(false);
 
   // Access the client
   const queryClient = useQueryClient();
@@ -124,6 +127,22 @@ const Profile = () => {
     }
   };
 
+  const followBtns = (state) => {
+    if (state) {
+      return (
+        <button onClick={handleFollower} disabled={proccess}>
+          {proccess ? 'proccess ...' : 'unfollwow'}
+        </button>
+      );
+    } else {
+      return (
+        <button onClick={handleFollower} disabled={proccess}>
+          {proccess ? 'proccess ...' : 'follow'}
+        </button>
+      );
+    }
+  };
+
   if (isLoadingFollowers) return 'Loading follower...';
 
   if (isErrorFollowers)
@@ -183,19 +202,23 @@ const Profile = () => {
               <span>{user?.email}</span>
             </div>
           </div>
-          {stateFollow ? (
-            <button onClick={handleFollower} disabled={proccess}>
-              {proccess ? 'proccess ...' : 'unfollwow'}
+
+          {currentUser._id === userId ? (
+            <button
+              className='update-button'
+              onClick={() => {
+                setOpenUpdate(true);
+              }}>
+              Update
             </button>
           ) : (
-            <button onClick={handleFollower} disabled={proccess}>
-              {proccess ? 'proccess ...' : 'follow'}
-            </button>
+            followBtns(stateFollow)
           )}
+          {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={user}/>}
         </div>
         <div className='right'>
-          <EmailOutlinedIcon  />
-          <MoreVertIcon  />
+          <EmailOutlinedIcon />
+          <MoreVertIcon />
         </div>
       </div>
     </section>
