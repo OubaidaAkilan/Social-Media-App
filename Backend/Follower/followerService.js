@@ -45,12 +45,12 @@ exports.createFollowing = asyncHandler(async (req, res, next) => {
 // @route  Get /api/v1/follower/:id/follwers
 // @access Public
 exports.getFollowers = asyncHandler(async (req, res, next) => {
-  const followers = await followerModel
-    .find({ following: req.params.id })
-    .populate('followers', 'username');
+  const followers = await followerModel.find({ following: req.params.id });
   if (!followers)
     next(new ApiError(`You don't able to get followers now, try later `, 503));
-  res.status(200).json({ data: followers });
+  res
+    .status(200)
+    .json({ data: followers.map((follower) => follower.followers) });
 });
 
 // @desc   Get following
