@@ -18,17 +18,18 @@ const Login = () => {
     try {
       await login(inputs);
       setIsLoading(false);
+      navigate('/');
     } catch (error) {
       setErr(error.response.data.message);
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    if (currentUser) {
-      navigate('/');
-    }
-  }, [currentUser, navigate]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     navigate('/');
+  //   }
+  // }, [currentUser, navigate]);
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));

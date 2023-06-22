@@ -5,14 +5,19 @@ import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Link } from 'react-router-dom';
-import Comments from '../comments/Comments';
+import Comments from '../comments/Comments.jsx';
+import { ModalContext } from '../../context/ModalContext';
+
 import { AuthContext } from '../../context/AuthContext';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { Cookies } from 'react-cookie';
 import AxiosInstance from '../../api/AxiosInstance.js';
+import Update from '../update/Update';
 
 const Post = ({ post }) => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, loggedIn } = useContext(AuthContext);
+
+  const { setOpenModal } = useContext(ModalContext);
 
   const cookies = new Cookies();
 
@@ -41,12 +46,14 @@ const Post = ({ post }) => {
     }
   };
 
-  const { data, error, isError, isLoading } = useQuery(
-    ['likes', post._id],
-    () => {
-      return fetchLikes(post._id);
-    }
-  );
+  const {
+    data: likes,
+    error,
+    isError,
+    isLoading,
+  } = useQuery(['likes', post._id], () => {
+    return fetchLikes(post._id);
+  });
 
   const addLike = async () => {
     try {
@@ -107,9 +114,13 @@ const Post = ({ post }) => {
 
   const handleLike = async (e) => {
     e.preventDefault();
-
+    if (!loggedIn) {
+      setOpenModal(true);
+      return;
+    }
     try {
-      mutation.mutate(data.includes(currentUser._id));
+      setLiked(!liked);
+      mutation.mutate(likes.includes(currentUser._id));
     } catch (error) {
       console.error(error);
       // Handle the error appropriately
@@ -117,6 +128,7 @@ const Post = ({ post }) => {
   };
 
   const [openComment, setOpenComment] = useState(false);
+  // const [openModal, setOpenModal] = useState(false);
 
   if (isLoading) return 'Loading...';
 
@@ -149,19 +161,17 @@ const Post = ({ post }) => {
             <FavoriteOutlinedIcon
               style={{ color: 'red' }}
               onClick={(e) => {
-                setLiked(!liked);
                 handleLike(e);
               }}
             />
           ) : (
             <FavoriteBorderOutlinedIcon
               onClick={(e) => {
-                setLiked(!liked);
                 handleLike(e);
               }}
             />
           )}
-          {data.length} Likes
+          {likes.length} Likes
         </div>
         <div
           className='item'

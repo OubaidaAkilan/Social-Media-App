@@ -1,17 +1,19 @@
 import React, { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { AuthContext } from '../../context/AuthContext';
+import { ModalContext } from '../../context/ModalContext';
+
 import AxiosInstance from '../../api/AxiosInstance.js';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
-
-
 
 import AvatarImage from '../../assets/avatarImage.jpg';
 import './share.scss';
 
 const Share = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, loggedIn } = useContext(AuthContext);
+
+  const { setOpenModal } = useContext(ModalContext);
 
   const cookies = new Cookies();
 
@@ -58,7 +60,6 @@ const Share = () => {
   const [desc, setDesc] = useState('');
 
   const fileUploadHandler = async () => {
-
     if (file) {
       try {
         const fd = new FormData();
@@ -77,13 +78,15 @@ const Share = () => {
       } catch (error) {
         throw new Error('Failed to upload Image');
       }
-
     }
   };
 
   const handleShare = async (e) => {
     e.preventDefault();
-
+    if (!loggedIn) {
+      setOpenModal(true);
+      return;
+    }
     let imageUrl = '';
     try {
       if (file) {
