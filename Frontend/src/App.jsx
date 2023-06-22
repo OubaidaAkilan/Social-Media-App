@@ -17,13 +17,17 @@ import LeftBar from './components/leftbar/LeftBar';
 import RightBar from './components/rightbar/RightBar';
 import Home from './pages/home/Home';
 import Profile from './pages/profile/Profile';
-
+import Modal from './components/modal/Modal';
 import { DarkModeContext } from './context/DarkModeContext';
 import { AuthContext } from './context/AuthContext';
+import { ModalContext } from './context/ModalContext';
 
 function App() {
   const queryClient = new QueryClient();
-  const { currentUser } = useContext(AuthContext);
+
+  const { currentUser, loggedIn } = useContext(AuthContext);
+
+  const { openModal, setOpenModal } = useContext(ModalContext);
 
   const { darkMode } = useContext(DarkModeContext);
 
@@ -32,10 +36,11 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <section className={`theme-${darkMode ? 'dark' : 'light'}`}>
           <Navbar />
-          <div className='main' >
+          <div className='main'>
             <LeftBar />
             <Outlet />
             <RightBar />
+            {openModal && <Modal setOpenModal={setOpenModal} />}
           </div>
         </section>
       </QueryClientProvider>
@@ -43,7 +48,7 @@ function App() {
   };
 
   const ProtectedRoutes = ({ children }) => {
-    if (!currentUser) {
+    if (!currentUser && !loggedIn) {
       return <Navigate to='login' />;
     }
     return children;
