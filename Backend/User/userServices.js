@@ -79,7 +79,7 @@ exports.createUser = asyncHandler(async (req, res) => {
 // @route   Put /api/v1/users/:id
 // @access  Private
 exports.updateUser = asyncHandler(async (req, res, next) => {
-  const { username } = req.body;
+  const { username, profilePic, coverPic, city } = req.body;
   const { id } = req.params;
   const user = await userModel.findOneAndUpdate(
     { _id: id },
@@ -88,6 +88,9 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
       name: slugify(username),
       slug: slugify(username),
       email: req.body.email,
+      profilePic,
+      coverPic,
+      city,
     },
     {
       new: true,

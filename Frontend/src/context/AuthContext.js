@@ -8,7 +8,6 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const cookies = new Cookies();
 
-
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem('userData')) || null
   );
@@ -54,17 +53,27 @@ export const AuthContextProvider = ({ children }) => {
     setCurrentUser(userData);
   };
 
+  const logout =() =>{
+    setLoginState(false, currentUser);
+    cookies.remove('accessToken');
+  }
+
   useEffect(() => {
     localStorage.setItem('userData', JSON.stringify(currentUser));
-    // validateMyUser(currentUser);
+    
   }, [currentUser]);
 
   useEffect(() => {
     validateMyUser(currentUser);
+
+    return () => {
+      // Cleanup operations here
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, login, loggedIn }}>
+    <AuthContext.Provider value={{ currentUser, login, loggedIn, logout }}>
       {children}
     </AuthContext.Provider>
   );

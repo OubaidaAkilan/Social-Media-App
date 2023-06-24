@@ -4,7 +4,7 @@ const ApiError = require('../ErrorHandler/ApiError.js');
 const validateToken = require('../Token/validateToken');
 
 const bearerAuth = async (req, res, next) => {
-  console.log(req.headers['authorization'], 'req header Auth');
+  // console.log(req.headers['authorization'], 'req header Auth');
 
   if (req.headers['authorization']) {
     // 'Bearer token'

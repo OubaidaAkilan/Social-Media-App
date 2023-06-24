@@ -1,35 +1,45 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.scss';
 import { AuthContext } from '../../context/AuthContext';
+import { ModalContext } from '../../context/ModalContext';
+
 const Login = () => {
   const navigate = useNavigate();
-  const { login, currentUser } = useContext(AuthContext);
+
+  const { login } = useContext(AuthContext);
+
+  const { setOpenModal } = useContext(ModalContext);
+
   const [isLoading, setIsLoading] = useState(false);
+
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
   });
 
+  useEffect(() => {
+    setOpenModal(false);
+    return () => {
+      // Cleanup operations here
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [err, setErr] = useState(null);
+
   const handleLogin = async (e) => {
     setIsLoading(true);
     e.preventDefault();
     try {
       await login(inputs);
-      setIsLoading(false);
       navigate('/');
+      setIsLoading(false);
     } catch (error) {
       setErr(error.response.data.message);
       setIsLoading(false);
     }
   };
-
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     navigate('/');
-  //   }
-  // }, [currentUser, navigate]);
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));

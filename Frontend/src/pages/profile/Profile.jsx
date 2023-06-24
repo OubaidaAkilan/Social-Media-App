@@ -14,16 +14,22 @@ import { useQuery, useQueryClient, useMutation } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import { AuthContext } from '../../context/AuthContext';
+import { ModalContext } from '../../context/ModalContext';
+
 import Update from '../../components/update/Update';
 
 const Profile = () => {
   const cookies = new Cookies();
+
   const token = cookies.get('accessToken');
-  const { currentUser } = useContext(AuthContext);
+
+  const { currentUser, loggedIn } = useContext(AuthContext);
 
   const [stateFollow, setStateFollow] = useState(null);
 
   const [openUpdate, setOpenUpdate] = useState(false);
+
+  const { setOpenModal } = useContext(ModalContext);
 
   // Access the client
   const queryClient = useQueryClient();
@@ -53,7 +59,7 @@ const Profile = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setStateFollow(res.data.data.includes(currentUser._id));
       return res.data.data;
     } catch (error) {
@@ -157,7 +163,7 @@ const Profile = () => {
       <div className='social_profile-images'>
         <img
           src={
-            user?.coverPic ||
+            `/imagesUpload/${user?.coverPic}` ||
             'https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
           }
           alt='coverImage'
@@ -165,7 +171,7 @@ const Profile = () => {
         />
         <img
           src={
-            user?.profilePic ||
+            `/imagesUpload/${user?.profilePic}` ||
             'https://images.pexels.com/photos/14028501/pexels-photo-14028501.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load'
           }
           alt='profileImage'
@@ -207,6 +213,10 @@ const Profile = () => {
             <button
               className='update-button'
               onClick={() => {
+                if (!loggedIn) {
+                  setOpenModal(true);
+                  return;
+                }
                 setOpenUpdate(true);
               }}>
               Update
@@ -214,7 +224,7 @@ const Profile = () => {
           ) : (
             followBtns(stateFollow)
           )}
-          {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={user}/>}
+          {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={user} />}
         </div>
         <div className='right'>
           <EmailOutlinedIcon />

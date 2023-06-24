@@ -8,7 +8,6 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import AvatarImage from '../../assets/avatarImage.jpg';
 
 import './navbar.scss';
 import { DarkModeContext } from '../../context/DarkModeContext';
@@ -16,7 +15,7 @@ import { AuthContext } from '../../context/AuthContext';
 
 const Navbar = () => {
   const { toggle, darkMode } = useContext(DarkModeContext);
-  const { currentUser, loggedIn } = useContext(AuthContext);
+  const { loggedIn, logout } = useContext(AuthContext);
   return (
     <nav className='social__nav'>
       <div className='social__nav-left'>
@@ -51,13 +50,9 @@ const Navbar = () => {
               <span>Login</span>
             </Link>
           ) : (
-            <>
-              <img
-                src={currentUser?.profilePic || AvatarImage}
-                alt='profileImage'
-              />
-              <span>{currentUser?.name}</span>
-            </>
+            <Link to='/login'>
+              <span onClick={logout}>Logout</span>
+            </Link>
           )}
         </div>
       </div>

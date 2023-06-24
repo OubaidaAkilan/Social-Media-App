@@ -73,7 +73,6 @@ const Share = () => {
             },
           }
         );
-        console.log(res.data, 'res.data');
         return res.data;
       } catch (error) {
         throw new Error('Failed to upload Image');
@@ -107,7 +106,10 @@ const Share = () => {
   return (
     <div className='social__share'>
       <div className='social__share-postInputs'>
-        <img src={currentUser?.profilePic || AvatarImage} alt='free profile' />
+        <img
+          src={`/imagesUpload/${currentUser?.profilePic}` || AvatarImage}
+          alt='free profile'
+        />
         <textarea
           name='post_desc'
           placeholder={`What's on your mind ${currentUser?.name}`}

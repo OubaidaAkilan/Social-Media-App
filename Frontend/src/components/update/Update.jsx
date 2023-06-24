@@ -1,20 +1,104 @@
 import React, { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import AxiosInstance from '../../api/AxiosInstance.js';
+import { Cookies } from 'react-cookie';
+import axios from 'axios';
 import './update.scss';
 
 const Update = (props) => {
+  const cookies = new Cookies();
+
+  const token = cookies.get('accessToken');
+
   const [inputs, setInputs] = useState({
     username: props.user.username,
     email: props.user.email,
     city: props.user.city || '',
   });
 
-  const handleChange = (e) => {
-    console.log(inputs);
-    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const [profilePic, setProfilePic] = useState(null);
+
+  const [coverPic, setCoverPic] = useState(null);
+
+  const fileUploadHandler = async (file) => {
+    if (file) {
+      try {
+        const fd = new FormData();
+        fd.append('file', file, file.name);
+        const res = await axios.post(
+          'http://localhost:3000/api/v1/upload',
+          fd,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        return res.data;
+      } catch (error) {
+        throw new Error('Failed to upload Image');
+      }
+    }
   };
 
-  const handleSave = (e) => {
-    
+  const updateUser = async (body) => {
+    try {
+      const response = await AxiosInstance.put(`/users/${props.userId}`, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.data;
+    } catch (error) {
+      throw new Error('Failed to fetch posts');
+    }
+  };
+
+  // Access the client
+  const queryClient = useQueryClient();
+
+  // Mutations
+  const mutation = useMutation(
+    (userInfo) => {
+      return updateUser(userInfo);
+    },
+
+    {
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries('users');
+      },
+    }
+  );
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+
+    let profilePicUrl = '';
+    let coverPicUrl = '';
+
+    try {
+      if (profilePic && coverPic) {
+        profilePicUrl = await fileUploadHandler(profilePic);
+        coverPicUrl = await fileUploadHandler(coverPic);
+      }
+      mutation.mutate({
+        ...inputs,
+        coverPic: coverPicUrl,
+        profilePic: profilePicUrl,
+      });
+
+      setProfilePic(null);
+      setCoverPic(null);
+    } catch (error) {
+      console.error(error);
+      // Handle the error appropriately
+    }
+  };
+
+  const handleChange = (e) => {
+    // console.log(inputs);
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handelClose = (e) => {
@@ -23,7 +107,7 @@ const Update = (props) => {
   };
 
   return (
-    <div className='social__update modal'>
+    <div className='social__update update__modal'>
       <svg
         onClick={handelClose}
         xmlns='http://www.w3.org/2000/svg'
@@ -39,12 +123,42 @@ const Update = (props) => {
         />
       </svg>
 
-      <label htmlFor='file1'>Cover pic:</label>
-      <input className='file-input' type='file' name='file1' />
-
-      <label htmlFor='file2'>Profile pic:</label>
-      <input className='file-input' type='file' name='file2' />
-
+      <label htmlFor='coverPic'>Cover pic:</label>
+      <input
+        className='file-input'
+        type='file'
+        name='coverPic'
+        id='coverPic'
+        onChange={(e) => {
+          e.preventDefault();
+          setCoverPic(e.target.files[0]);
+        }}
+      />
+      {coverPic && (
+        <img
+          className='social__share-file'
+          src={URL.createObjectURL(coverPic)}
+          alt='coverPic'
+        />
+      )}
+      <label htmlFor='profilePic'>Profile pic:</label>
+      <input
+        className='file-input'
+        type='file'
+        name='profilePic'
+        id='profilePic'
+        onChange={(e) => {
+          e.preventDefault();
+          setProfilePic(e.target.files[0]);
+        }}
+      />
+      {profilePic && (
+        <img
+          className='social__share-file'
+          src={URL.createObjectURL(profilePic)}
+          alt='profilePic'
+        />
+      )}
       <label htmlFor='username'>Username:</label>
       <input
         className='text-input'
