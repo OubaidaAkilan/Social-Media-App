@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-// //========Development mode
-const baseURL = 'http://localhost:3000/api/v1';
+//========Development mode
+// const baseURL = 'http://localhost:3000/api/v1';
 
 //========Production mode
-// const baseURL = 'https://oubaida-social-media-app.onrender.com/api/v1';
+const baseURL = 'https://oubaida-social-media-app.onrender.com/api/v1';
 
 // Create a new axios instance
 const AxiosInstance = axios.create({
