@@ -32,6 +32,7 @@ const app = express();
 // Middlewares
 
 // we parse the data within body request from string into json
+app.set('trust proxy', 1);
 app.use(cookieParser());
 app.use(express.json());
 //===== CORS
