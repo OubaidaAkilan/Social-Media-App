@@ -33,7 +33,7 @@ exports.addLike = asyncHandler(async (req, res, next) => {
 
 exports.deleteLike = asyncHandler(async (req, res, next) => {
   const { postId } = req.query;
-  console.log(postId, 'postId');
+  // console.log(postId, 'postId');
   const unlike = await likeModel.findOneAndDelete({
     user: req.user.id,
     post: postId,

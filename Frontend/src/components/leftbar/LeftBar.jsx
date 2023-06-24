@@ -29,7 +29,7 @@ const LeftBar = () => {
         <div className='user'>
           <Link to={`/profile/${currentUser._id}`}>
             <Item
-              img={currentUser?.profilePic || AvatarImage}
+              img={`./imagesUpload/${currentUser?.profilePic}` || AvatarImage}
               title={currentUser?.name}
             />
           </Link>

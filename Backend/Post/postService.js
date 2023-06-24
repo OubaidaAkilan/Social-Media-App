@@ -117,7 +117,7 @@ exports.getPost = asyncHandler(async (req, res, next) => {
       match: { post: req.params.id },
       select: 'desc -_id',
     });
-    console.log(post.comments);
+    // console.log(post.comments);
     if (!post) return next(new ApiError(`There is an server issue  `, 500));
     res.status(200).json({
       data: post,

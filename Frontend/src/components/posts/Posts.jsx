@@ -1,5 +1,4 @@
-// import {  } from 'react';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useQuery } from 'react-query';
 import AxiosInstance from '../../api/AxiosInstance.js';
 import { Cookies } from 'react-cookie';

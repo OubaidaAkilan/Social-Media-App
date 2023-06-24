@@ -30,7 +30,10 @@ const Stories = () => {
   return (
     <section className='social__stories'>
       <div className='social__stories-story'>
-        <img src={currentUser?.profilePic || storiesArr[0].img} alt='profilPic' />
+        <img
+          src={`/imagesUpload/${currentUser?.profilePic}` || storiesArr[0].img}
+          alt='profilPic'
+        />
         <span>{currentUser.name}</span>
         <button>+</button>
       </div>

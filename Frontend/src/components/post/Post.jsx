@@ -12,7 +12,6 @@ import { AuthContext } from '../../context/AuthContext';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { Cookies } from 'react-cookie';
 import AxiosInstance from '../../api/AxiosInstance.js';
-import Update from '../update/Update';
 
 const Post = ({ post }) => {
   const { currentUser, loggedIn } = useContext(AuthContext);

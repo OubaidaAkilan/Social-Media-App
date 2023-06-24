@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AxiosInstance from '../../api/AxiosInstance.js';
-
+import { ModalContext } from '../../context/ModalContext';
 import './register.scss';
-import { useState } from 'react';
 
 const Register = () => {
+  const { setOpenModal } = useContext(ModalContext);
+
   const [inputs, setInputs] = useState({
     username: '',
     email: '',
@@ -14,9 +15,18 @@ const Register = () => {
   });
 
   const [err, setErr] = useState(null);
+
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  useEffect(() => {
+    setOpenModal(false);
+    return () => {
+      // Cleanup operations here
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleRegister = async (e) => {
     e.preventDefault();
