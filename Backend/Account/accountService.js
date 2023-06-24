@@ -37,7 +37,9 @@ exports.login = asyncHandler(async (req, res) => {
 
   res
     .cookie('accessToken', req.token, {
-      httpOnly: false,
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
     })
     .status(200)
     .json({ username, email, name, coverPic, profilePic, city, website, _id });
