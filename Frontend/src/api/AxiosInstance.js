@@ -11,7 +11,8 @@ const AxiosInstance = axios.create({
   baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
-    accept: 'application/json',
+    Accept: 'application/json',
+    'Access-Control-Allow-Origin': 'http://localhost:3002',
   },
   withCredentials: true,
 });
