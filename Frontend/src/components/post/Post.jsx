@@ -151,7 +151,7 @@ const Post = ({ post }) => {
       </div>
       <div className='content'>
         <p className='desc'>{post?.desc}</p>
-        {console.log(post?.imgPost)}
+        {/* {console.log(post?.imgPost)} */}
         <img src={'./imagesUpload/' + post?.imgPost} alt='img-Post' />
       </div>
       <div className='infoPost'>

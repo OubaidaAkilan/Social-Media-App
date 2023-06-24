@@ -7,7 +7,6 @@ import AxiosInstance from '../../api/AxiosInstance.js';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
 
-import AvatarImage from '../../assets/avatarImage.jpg';
 import './share.scss';
 
 const Share = () => {
@@ -107,7 +106,7 @@ const Share = () => {
     <div className='social__share'>
       <div className='social__share-postInputs'>
         <img
-          src={`/imagesUpload/${currentUser?.profilePic}` || AvatarImage}
+          src={`/imagesUpload/${currentUser?.profilePic}`}
           alt='free profile'
         />
         <textarea
