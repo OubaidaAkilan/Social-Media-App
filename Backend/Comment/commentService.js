@@ -5,7 +5,7 @@ const ApiError = require('../ErrorHandler/ApiError.js');
 
 // Nested route
 exports.setPostIdToBody = (req, res, next) => {
-  req.body.post ||= req.params.postId;
+  req.body.post = req.body.post || req.params.postId;
   next();
 };
 
