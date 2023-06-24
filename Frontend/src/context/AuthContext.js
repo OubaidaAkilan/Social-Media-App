@@ -8,8 +8,19 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const cookies = new Cookies();
 
+  const DummyData = {
+    city: 'Jo',
+    coverPic: '1687439011094gg.jpg',
+    email: 'Guest',
+    name: 'Guest',
+    profilePic: 'avatarImage.jpg',
+    username: 'Guest',
+    website: 'Guest',
+    _id: 'Guest',
+  };
+
   const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem('userData')) || null
+    JSON.parse(localStorage.getItem('userData')) || DummyData
   );
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -53,14 +64,13 @@ export const AuthContextProvider = ({ children }) => {
     setCurrentUser(userData);
   };
 
-  const logout =() =>{
-    setLoginState(false, currentUser);
+  const logout = () => {
+    setLoginState(false, DummyData);
     cookies.remove('accessToken');
-  }
+  };
 
   useEffect(() => {
     localStorage.setItem('userData', JSON.stringify(currentUser));
-    
   }, [currentUser]);
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import './comments.scss';
-import AvatarImage from '../../assets/avatarImage.jpg';
 import AxiosInstance from '../../api/AxiosInstance.js';
 import { Cookies } from 'react-cookie';
 import { AuthContext } from '../../context/AuthContext';
@@ -96,10 +95,7 @@ const Comments = ({ post }) => {
   return (
     <div className='social__comments'>
       <div className='social__comments-write'>
-        <img
-          src={currentUser?.profilePic || AvatarImage}
-          alt='profilePicture'
-        />
+        <img src={currentUser?.profilePic} alt='profilePicture' />
         <input
           type='text'
           placeholder='Writ a comment'
@@ -110,10 +106,7 @@ const Comments = ({ post }) => {
       {comments.map((comment, idx) => {
         return (
           <div className='social_comments-comment' key={idx}>
-            <img
-              src={comment?.user?.profilePic || AvatarImage}
-              alt='profilePicture'
-            />
+            <img src={comment?.user?.profilePic} alt='profilePicture' />
             <div className='commentInfo'>
               <span>{comment?.user?.username}</span>
               <p>{comment?.desc}</p>

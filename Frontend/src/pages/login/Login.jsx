@@ -33,8 +33,8 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(inputs);
-      navigate('/');
       setIsLoading(false);
+      navigate('/');
     } catch (error) {
       setErr(error.response.data.message);
       setIsLoading(false);

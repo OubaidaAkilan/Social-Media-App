@@ -15,7 +15,7 @@ import Messages from '../../assets/10.png';
 import Fundraiser from '../../assets/11.png';
 import Tutorials from '../../assets/12.png';
 import Courses from '../../assets/13.png';
-import AvatarImage from '../../assets/avatarImage.jpg';
+
 
 import { AuthContext } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
@@ -29,8 +29,8 @@ const LeftBar = () => {
         <div className='user'>
           <Link to={`/profile/${currentUser._id}`}>
             <Item
-              img={`./imagesUpload/${currentUser?.profilePic}` || AvatarImage}
-              title={currentUser?.name}
+              img={`./imagesUpload/${currentUser?.profilePic}`}
+              title={currentUser?.username}
             />
           </Link>
         </div>
