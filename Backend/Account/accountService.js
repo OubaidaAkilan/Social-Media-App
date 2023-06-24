@@ -37,7 +37,7 @@ exports.login = asyncHandler(async (req, res) => {
 
   res
     .cookie('accessToken', req.token, {
-      domain: 'https://oubaida-social-media-app.onrender.com',
+      domain: '.oubaida-social-media-app.onrender.com',
       httpOnly: true,
       secure: true,
       sameSite: 'none',
