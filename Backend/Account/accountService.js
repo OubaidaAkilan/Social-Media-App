@@ -35,12 +35,13 @@ exports.login = asyncHandler(async (req, res) => {
   const { username, email, name, coverPic, profilePic, city, website, _id } =
     req.user;
 
+  res.cookie('accessToken', req.token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+  });
+  res.header('Access-Control-Allow-Credentials', true);
   res
-    .cookie('accessToken', req.token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: 'none',
-    })
     .status(200)
     .json({ username, email, name, coverPic, profilePic, city, website, _id });
 });
