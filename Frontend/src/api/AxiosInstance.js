@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-//========Development mode
+// //========Development mode
 // const baseURL = 'http://localhost:3000/api/v1';
 
 //========Production mode
@@ -11,8 +11,7 @@ const AxiosInstance = axios.create({
   baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
-    Accept: 'application/json',
-    'Access-Control-Allow-Origin': 'http://localhost:3002',
+    accept: 'application/json',
   },
   withCredentials: true,
 });
