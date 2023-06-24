@@ -38,7 +38,7 @@ exports.login = asyncHandler(async (req, res) => {
   res
     .cookie('accessToken', req.token, {
       httpOnly: true,
-      secure: true,
+      secure: false,
       sameSite: 'none',
     })
     .status(200)
