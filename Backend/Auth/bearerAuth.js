@@ -2,6 +2,10 @@
 
 const ApiError = require('../ErrorHandler/ApiError.js');
 const validateToken = require('../Token/validateToken');
+const decryptToken = require('../Token/decryptToken.js');
+
+
+
 
 const bearerAuth = async (req, res, next) => {
   // console.log(req.headers['authorization'], 'req header Auth');
@@ -15,7 +19,8 @@ const bearerAuth = async (req, res, next) => {
 
     try {
       // console.log('user', 1111111111);
-      const user = await validateToken(token, next);
+      const decryptAccessToken = decryptToken(token);
+      const user = await validateToken(decryptAccessToken, next);
       if (user) {
         req.user = user;
         next();

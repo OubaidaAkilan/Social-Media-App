@@ -1,8 +1,8 @@
 'use strict';
 const userModel = require('../User/userModel.js');
-const { asyncHandler, slugify, bcrypt } = require('../ourPackages.js');
+const { asyncHandler, slugify, base64 } = require('../ourPackages.js');
 const ApiError = require('../ErrorHandler/ApiError.js');
-
+const encryptToken =require('../Token/encryptToken.js');
 // @desc    Create new user
 // @route   Post /api/v1/account
 // @access  Public
@@ -35,15 +35,23 @@ exports.login = asyncHandler(async (req, res) => {
   const { username, email, name, coverPic, profilePic, city, website, _id } =
     req.user;
 
-  res.cookie('accessToken', req.token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none',
+  const encryptAccessToken = encryptToken(req.token); // I will deencrypt in the bearer auth
+
+  const userData = {
+    username,
+    email,
+    name,
+    coverPic,
+    profilePic,
+    city,
+    website,
+    _id,
+  };
+
+  res.status(200).json({
+    userData,
+    accessToken: encryptAccessToken,
   });
-  res.header('Access-Control-Allow-Credentials', true);
-  res
-    .status(200)
-    .json({ username, email, name, coverPic, profilePic, city, website, _id });
 });
 
 // @desc    Logout user
