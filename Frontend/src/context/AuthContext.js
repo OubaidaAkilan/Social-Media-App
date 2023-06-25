@@ -1,8 +1,8 @@
 import React, { createContext, useEffect, useState } from 'react';
 import AxiosInstance from '../api/AxiosInstance';
 import base64 from 'base-64';
+
 import { Cookies } from 'react-cookie';
-import jwtDecode from 'jwt-decode';
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
@@ -41,16 +41,20 @@ export const AuthContextProvider = ({ children }) => {
         },
       }
     );
-    validateMyUser(res.data);
+    console.log(res);
+    validateMyUser(res.data.userData, res.data.accessToken);
   };
 
-  const validateMyUser = (data) => {
+  const validateMyUser = (data, token) => {
     if (data) {
-      const token = cookies.get('accessToken');
-
-      const validUser = token ? jwtDecode(token) : null;
-      if (validUser) {
+      if (token) {
         setLoginState(true, data);
+
+        // Set a cookie
+        cookies.set('accessToken', token, {
+          path: '/',
+          expires: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
+        });
       } else {
         setLoginState(false, currentUser);
       }
@@ -61,13 +65,15 @@ export const AuthContextProvider = ({ children }) => {
 
   const setLoginState = (isLogged, userData) => {
     setLoggedIn(isLogged);
-    console.log(userData,444444);
+    console.log(userData, 444444);
     setCurrentUser(userData);
   };
 
   const logout = () => {
     setLoginState(false, DummyData);
-    cookies.remove('accessToken');
+
+    // Remove the cookie
+    cookies.remove('accessToken', { path: '/' });
   };
 
   useEffect(() => {
@@ -75,7 +81,8 @@ export const AuthContextProvider = ({ children }) => {
   }, [currentUser]);
 
   useEffect(() => {
-    validateMyUser(currentUser);
+    const accessToken = cookies.get('accessToken');
+    validateMyUser(currentUser, accessToken);
 
     return () => {
       // Cleanup operations here
