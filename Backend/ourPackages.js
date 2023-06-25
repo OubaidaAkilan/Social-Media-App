@@ -8,6 +8,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const base64 = require('base-64');
+
 module.exports = {
   express,
   dotenv,
@@ -19,4 +21,5 @@ module.exports = {
   morgan,
   cors,
   cookieParser,
+  base64,
 };
