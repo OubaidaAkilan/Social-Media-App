@@ -35,7 +35,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 //===== CORS
-const whitelist = [process.env.FRONTEND_URL, 'http://127.0.0.1:3002'];
+const whitelist = [process.env.FRONTEND_URL, 'http://127.0.0.1:3001'];
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
