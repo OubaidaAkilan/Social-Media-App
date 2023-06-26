@@ -14,6 +14,8 @@ const Register = () => {
     name: '',
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [err, setErr] = useState(null);
 
   const handleChange = (e) => {
@@ -29,10 +31,30 @@ const Register = () => {
   }, []);
 
   const handleRegister = async (e) => {
+    setIsLoading(true);
+
     e.preventDefault();
 
+    if (
+      !(
+        inputs.email.length &&
+        inputs.password.length &&
+        inputs.username.length &&
+        inputs.name.length
+      )
+    ) {
+      setErr('All fields are required');
+
+      setIsLoading(false);
+
+      return;
+    }
+
     try {
+      
       await AxiosInstance.post('/account/register', inputs);
+
+      setIsLoading(false);
     } catch (error) {
       setErr(error.response.data.message);
     }
@@ -81,7 +103,9 @@ const Register = () => {
               onChange={handleChange}
             />
             {err && <p>{err}</p>}
-            <button onClick={handleRegister}>Register</button>
+            <button onClick={handleRegister} disabled={isLoading}>
+              {isLoading ? 'loading ....' : 'Register'}
+            </button>
           </form>
         </div>
       </div>
