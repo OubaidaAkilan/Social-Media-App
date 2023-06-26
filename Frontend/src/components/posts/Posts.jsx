@@ -4,6 +4,7 @@ import AxiosInstance from '../../api/AxiosInstance.js';
 import { Cookies } from 'react-cookie';
 import './posts.scss';
 import Post from '../post/Post';
+import PostSkeleton from '../post/PostSkeleton.jsx';
 const Posts = () => {
   const cookies = new Cookies();
   const token = cookies.get('accessToken');
@@ -28,9 +29,19 @@ const Posts = () => {
     isLoading,
   } = useQuery('posts', fetchPost);
 
-  if (isLoading) return 'Loading...';
+  if (isLoading) return <PostSkeleton />;
 
-  if (isError) return 'An error has occurred: ' + error.message;
+  if (isError)
+    return (
+      <div className='error-container'>
+        <h2 className='error-title'>Error:{error.message}</h2>
+        <p className='error-message'>
+          We apologize for the inconvenience. There seems to be an issue
+          retrieving the posts at the moment. Please check your internet
+          connection and try again later.
+        </p>
+      </div>
+    );
 
   return (
     <section className='social__posts'>
