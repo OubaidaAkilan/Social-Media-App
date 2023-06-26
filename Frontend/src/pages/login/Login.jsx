@@ -30,13 +30,26 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     setIsLoading(true);
+
     e.preventDefault();
+
+    if (!(inputs.email.length && inputs.password.length)) {
+      setErr('All fields are required');
+
+      setIsLoading(false);
+
+      return;
+    }
+
     try {
       await login(inputs);
+
       setIsLoading(false);
+
       navigate('/');
     } catch (error) {
       setErr(error.response.data.message);
+
       setIsLoading(false);
     }
   };
@@ -64,7 +77,7 @@ const Login = () => {
           <h1>Login</h1>
           <form>
             <input
-              type='text'
+              type='email'
               placeholder='Email'
               name='email'
               onChange={handleChange}
