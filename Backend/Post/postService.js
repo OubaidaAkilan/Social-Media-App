@@ -4,7 +4,7 @@ const ApiError = require('../ErrorHandler/ApiError.js');
 const postModel = require('./postModel.js');
 
 // @desc   Get list of posts
-// @route  Get /api/v1/post
+// @route  Get /api/v1/post?page=<number>&limit=<number>
 // @access public
 exports.getPosts = asyncHandler(async (req, res, next) => {
   // (req.query.page * 1) means convert the string into integer number

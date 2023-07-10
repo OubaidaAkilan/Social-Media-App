@@ -24,6 +24,8 @@ const Post = ({ post }) => {
 
   const [liked, setLiked] = useState(null);
 
+  const [showDeleteBtn, setShowDeleteBtn] = useState(false);
+
   //===Get Likes
 
   const fetchLikes = async (postId) => {
@@ -127,7 +129,6 @@ const Post = ({ post }) => {
   };
 
   const [openComment, setOpenComment] = useState(false);
-  // const [openModal, setOpenModal] = useState(false);
 
   if (isLoading) return 'Loading...';
 
@@ -147,7 +148,19 @@ const Post = ({ post }) => {
             <span className='date'>1 min ago</span>
           </div>
         </div>
-        <MoreHorizIcon />
+        <div className='delete_post'>
+          <MoreHorizIcon
+            className='delete_post-icon'
+            onClick={() => setShowDeleteBtn(!showDeleteBtn)}
+          />
+          <button
+            onClick={() => setShowDeleteBtn(!showDeleteBtn)}
+            className={`delete_post-btn ${
+              showDeleteBtn ? 'show_post-btn' : ''
+            }`}>
+            Delete Post
+          </button>
+        </div>
       </div>
       <div className='content'>
         <p className='desc'>{post?.desc}</p>
