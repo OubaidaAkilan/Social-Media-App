@@ -4,7 +4,7 @@
   "description": "A lightweight social media app clone with user profiles, posts sharing, and liking functionality'",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "NODE_ENV=development nodemon server.js",
     "prod": "NODE_ENV=prodction node server.js"
   },
   "repository": {
