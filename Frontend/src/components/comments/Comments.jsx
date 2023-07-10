@@ -23,7 +23,7 @@ const Comments = ({ post }) => {
       });
       return response.data.data;
     } catch (error) {
-      throw new Error('Failed to fetch comments');
+      throw new Error('You does not have permission to access');
     }
   };
 
