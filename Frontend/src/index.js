@@ -5,13 +5,16 @@ import './index.css';
 import { DarkModeContextProvider } from './context/DarkModeContext';
 import { AuthContextProvider } from './context/AuthContext';
 import { ModalContextProvider } from './context/ModalContext';
+import { LoadMoreItemsContextProvider } from './context/LoadMoreItemsContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <DarkModeContextProvider>
     <AuthContextProvider>
       <ModalContextProvider>
-        <App />
+        <LoadMoreItemsContextProvider>
+          <App />
+        </LoadMoreItemsContextProvider>
       </ModalContextProvider>
     </AuthContextProvider>
   </DarkModeContextProvider>

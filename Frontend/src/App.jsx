@@ -22,6 +22,8 @@ import { DarkModeContext } from './context/DarkModeContext';
 import { AuthContext } from './context/AuthContext';
 import { ModalContext } from './context/ModalContext';
 
+
+
 function App() {
   const queryClient = new QueryClient();
 
@@ -30,6 +32,8 @@ function App() {
   const { openModal, setOpenModal } = useContext(ModalContext);
 
   const { darkMode } = useContext(DarkModeContext);
+
+
 
   const Layout = () => {
     return (
