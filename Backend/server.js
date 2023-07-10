@@ -37,8 +37,10 @@ app.use(express.json());
 //===== CORS
 const whitelist =
   process.env.NODE_ENV === 'development'
-    ? ['http://127.0.0.1:3001', 'http://localhost:3001']
-    : [process.env.FRONTEND_URL];
+    ? [process.env.DEV_FRONTEND_URL]
+    : [process.env.PRO_FRONTEND_URL];
+
+    console.log(whitelist,1111);
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
