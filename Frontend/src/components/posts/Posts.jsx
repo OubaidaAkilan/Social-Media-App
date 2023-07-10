@@ -1,22 +1,42 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import AxiosInstance from '../../api/AxiosInstance.js';
 import { Cookies } from 'react-cookie';
 import './posts.scss';
 import Post from '../post/Post';
 import PostSkeleton from '../post/PostSkeleton.jsx';
+
+import { LoadMoreItemsContext } from '../../context/LoadMoreItemsContext.js';
+
 const Posts = () => {
   const cookies = new Cookies();
+
   const token = cookies.get('accessToken');
+
+  const { noOfPage, setLoading } = useContext(LoadMoreItemsContext);
+
+  const [loadedData, setLoadedData] = useState([]);
 
   const fetchPost = async () => {
     try {
-      const response = await AxiosInstance.get('/post', {
+      const response = await AxiosInstance.get(`/post?page=${noOfPage}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      return response.data.data;
+
+      if (noOfPage !== 1) {
+        setLoading(false);
+      } else {
+        setLoadedData(response.data.data);
+        return;
+      }
+
+      let posts = response.data.data;
+
+      setLoadedData([...loadedData, ...posts]);
+
+      return posts;
     } catch (error) {
       throw new Error('Failed to fetch posts');
     }
@@ -27,7 +47,11 @@ const Posts = () => {
     error,
     isError,
     isLoading,
-  } = useQuery('posts', fetchPost);
+  } = useQuery(['posts', noOfPage], fetchPost);
+
+  // useEffect(() => {
+  //   // setLoadedData([...loadedData]);
+  // }, [posts]);
 
   if (isLoading) return <PostSkeleton />;
 
@@ -45,7 +69,7 @@ const Posts = () => {
 
   return (
     <section className='social__posts'>
-      {posts?.map((post, idx) => {
+      {loadedData?.map((post, idx) => {
         return (
           <div className='social_posts-post' key={idx}>
             <Post post={post} key={idx} />
