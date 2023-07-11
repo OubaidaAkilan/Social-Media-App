@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import AxiosInstance from '../../api/AxiosInstance.js';
 import { Cookies } from 'react-cookie';
@@ -43,15 +43,13 @@ const Posts = () => {
   };
 
   const {
-    data: posts,
+    
     error,
     isError,
     isLoading,
   } = useQuery(['posts', noOfPage], fetchPost);
 
-  // useEffect(() => {
-  //   // setLoadedData([...loadedData]);
-  // }, [posts]);
+
 
   if (isLoading) return <PostSkeleton />;
 
