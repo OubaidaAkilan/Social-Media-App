@@ -26,6 +26,64 @@ const Post = ({ post }) => {
 
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
 
+  // Access the client
+  const queryClient = useQueryClient();
+
+  // Mutations
+
+  // ===========Start Post ========= //
+
+  const deletePost = async () => {
+    try {
+      const response = await AxiosInstance.delete(
+        `/post/${post._id}`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      
+      return response.data.data;
+    } catch (error) {
+      throw new Error('Failed to delete a post');
+    }
+  };
+
+  const deletePostMutation = useMutation(
+    (canDo) => {
+      if (canDo) return deletePost();
+      return;
+    },
+
+    {
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries(['posts']);
+      },
+    }
+  );
+
+  const handleDeletePost = async (e) => {
+    e.preventDefault();
+    
+    if (!loggedIn) {
+      setOpenModal(true);
+      return;
+    }
+    try {
+      deletePostMutation.mutate(post.user._id === currentUser._id);
+    } catch (error) {
+      console.error(error);
+      // Handle the error appropriately
+    }
+  };
+
+  // ===========End Post ========= //
+
+  // ===========Start Like ========= //
+
   //===Get Likes
 
   const fetchLikes = async (postId) => {
@@ -95,10 +153,6 @@ const Post = ({ post }) => {
     }
   };
 
-  // Access the client
-  const queryClient = useQueryClient();
-
-  // Mutations
   const mutation = useMutation(
     (liked) => {
       if (liked) return deleteLike();
@@ -128,6 +182,8 @@ const Post = ({ post }) => {
     }
   };
 
+  // ===========End Like ========= //
+
   const [openComment, setOpenComment] = useState(false);
 
   if (isLoading) return 'Loading...';
@@ -154,7 +210,7 @@ const Post = ({ post }) => {
             onClick={() => setShowDeleteBtn(!showDeleteBtn)}
           />
           <button
-            onClick={() => setShowDeleteBtn(!showDeleteBtn)}
+            onClick={(e) => handleDeletePost(e)}
             className={`delete_post-btn ${
               showDeleteBtn ? 'show_post-btn' : ''
             }`}>

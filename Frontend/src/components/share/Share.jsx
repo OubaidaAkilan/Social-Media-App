@@ -94,7 +94,7 @@ const Share = () => {
         desc,
         imgPost: imageUrl,
       });
-      setDesc('');
+      setDesc(null);
       setFile(null);
     } catch (error) {
       console.error(error);
