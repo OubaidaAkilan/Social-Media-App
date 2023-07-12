@@ -29,7 +29,8 @@ function App() {
 
   const { currentUser, loggedIn } = useContext(AuthContext);
 
-  const { openModal, setOpenModal } = useContext(ModalContext);
+  const { openModal, setOpenModal,component } =
+    useContext(ModalContext);
 
   const { darkMode } = useContext(DarkModeContext);
 
@@ -44,7 +45,9 @@ function App() {
             <LeftBar />
             <Outlet />
             <RightBar />
-            {openModal && <Modal setOpenModal={setOpenModal} />}
+            {openModal && (
+              <Modal setOpenModal={setOpenModal} component={component} />
+            )}
           </div>
         </section>
       </QueryClientProvider>
