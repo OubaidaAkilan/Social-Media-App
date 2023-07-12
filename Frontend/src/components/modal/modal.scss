@@ -93,3 +93,26 @@
     }
   }
 }
+
+.modal-description {
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  // Add some fun animation
+  animation: wiggle 0.5s ease-in-out infinite alternate;
+
+  @keyframes wiggle {
+    from {
+      transform: rotateZ(-2deg);
+    }
+    to {
+      transform: rotateZ(2deg);
+    }
+  }
+}

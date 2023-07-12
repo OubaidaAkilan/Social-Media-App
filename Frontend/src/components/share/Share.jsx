@@ -9,10 +9,12 @@ import axios from 'axios';
 
 import './share.scss';
 
+import AuthModal from '../modal/AuthModal';
+
 const Share = () => {
   const { currentUser, loggedIn } = useContext(AuthContext);
 
-  const { setOpenModal } = useContext(ModalContext);
+  const { setOpenModal, setComponent } = useContext(ModalContext);
 
   const cookies = new Cookies();
 
@@ -83,6 +85,7 @@ const Share = () => {
     e.preventDefault();
     if (!loggedIn) {
       setOpenModal(true);
+      setComponent(<AuthModal />);
       return;
     }
     let imageUrl = '';

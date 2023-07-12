@@ -12,11 +12,12 @@ import { AuthContext } from '../../context/AuthContext';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { Cookies } from 'react-cookie';
 import AxiosInstance from '../../api/AxiosInstance.js';
+import DeletePostModal from '../modal/DeletePostModal.jsx';
 
 const Post = ({ post }) => {
   const { currentUser, loggedIn } = useContext(AuthContext);
 
-  const { setOpenModal } = useContext(ModalContext);
+  const { setOpenModal, setComponent } = useContext(ModalContext);
 
   const cookies = new Cookies();
 
@@ -44,7 +45,7 @@ const Post = ({ post }) => {
           },
         }
       );
-      
+
       return response.data.data;
     } catch (error) {
       throw new Error('Failed to delete a post');
@@ -67,13 +68,16 @@ const Post = ({ post }) => {
 
   const handleDeletePost = async (e) => {
     e.preventDefault();
-    
+
     if (!loggedIn) {
       setOpenModal(true);
+
       return;
     }
     try {
       deletePostMutation.mutate(post.user._id === currentUser._id);
+      setOpenModal(true);
+      setComponent(<DeletePostModal />);
     } catch (error) {
       console.error(error);
       // Handle the error appropriately
@@ -171,6 +175,7 @@ const Post = ({ post }) => {
     e.preventDefault();
     if (!loggedIn) {
       setOpenModal(true);
+
       return;
     }
     try {
