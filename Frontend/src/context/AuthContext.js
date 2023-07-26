@@ -65,7 +65,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const setLoginState = (isLogged, userData) => {
     setLoggedIn(isLogged);
-    console.log(userData, 444444);
+    // console.log(userData, 444444);
     setCurrentUser(userData);
   };
 
