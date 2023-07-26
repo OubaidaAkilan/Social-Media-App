@@ -2,7 +2,7 @@
 
 .social__share {
   @include themify($themes) {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     background-color: themed(bg);
     color: themed(textColorSoft);
