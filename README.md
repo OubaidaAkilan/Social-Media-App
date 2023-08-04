@@ -23,6 +23,14 @@ Our Social Media App allows users to create and share posts and content with the
   [Effect Hook](https://reactjs.org/docs/hooks-effect.html), and
   [Refs Hook](https://reactjs.org/docs/refs-and-the-dom.html).
 
+- [React Router Dom Library](https://reactrouter.com/en/main) |
+  [BrowserRouter](https://reactrouter.com/en/main/router-components/browser-router),
+  [Router](https://reactrouter.com/en/main/router-components/router),
+  [Route](https://reactrouter.com/en/main/components/route),
+  [Routes](https://reactrouter.com/en/main/components/routes),
+  [Navigate](https://reactrouter.com/en/main/components/navigate), and
+  [Outlet](https://reactrouter.com/en/main/components/outlet)
+
 - [Axios](https://axios-http.com/docs/intro) | Axios is a popular JavaScript library used for making HTTP requests from web browsers or Node.js applications.
 
 - [MongoDB](https://www.mongodb.com/) | MongoDB is a popular open-source NoSQL database management system.
