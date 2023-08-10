@@ -190,7 +190,7 @@ const Share = () => {
             </svg>
           </button>
         </div>
-        <button className='share-btn' onClick={handleShare}>
+        <button className='createPost-btn' onClick={handleShare}>
           Share
         </button>
       </div>
