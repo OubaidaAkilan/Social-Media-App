@@ -106,7 +106,7 @@ const Share = () => {
   };
 
   return (
-    <div className='social__share'>
+    <div className='social__createPost'>
       <div className='social__share-postInputs'>
         <img
           src={`/imagesUpload/${currentUser?.profilePic}`}

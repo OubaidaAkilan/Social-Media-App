@@ -23,6 +23,14 @@ Our Social Media App allows users to create and share posts and content with the
   [Effect Hook](https://reactjs.org/docs/hooks-effect.html), and
   [Refs Hook](https://reactjs.org/docs/refs-and-the-dom.html).
 
+- [React Router Dom Library](https://reactrouter.com/en/main) |
+  [BrowserRouter](https://reactrouter.com/en/main/router-components/browser-router),
+  [Router](https://reactrouter.com/en/main/router-components/router),
+  [Route](https://reactrouter.com/en/main/components/route),
+  [Routes](https://reactrouter.com/en/main/components/routes),
+  [Navigate](https://reactrouter.com/en/main/components/navigate), and
+  [Outlet](https://reactrouter.com/en/main/components/outlet)
+
 - [Axios](https://axios-http.com/docs/intro) | Axios is a popular JavaScript library used for making HTTP requests from web browsers or Node.js applications.
 
 - [MongoDB](https://www.mongodb.com/) | MongoDB is a popular open-source NoSQL database management system.
@@ -76,6 +84,8 @@ Social-Media-App git:(main)$ npm start
 - This [Stack Overflow Answer](https://stackoverflow.com/questions/65827305/passing-a-component-to-the-usestate-hook) helped me how to passing a component to the useState hook.
 
 - This [Article](https://www.webnots.com/how-to-find-source-of-injected-stylesheets-in-chrome/) helped me how to Find Source of Injected Stylesheets in Chrome?
+
+- I have faced an issue where the 'Create and share post' section disappeared from browser after deploying the app. I investigated this issue and I found the element is still exist, but there is a new CSS selector called 'injection style' was added, I didn't create. After researching this issue, I found the browser generates the 'injection style' when the users use adblockers extension, to handle this issue I found many ways, but I have tried to test my approach to change the name of the parent class and delete the 'share' word and everything began work correctly.
 
 ## Contact
 
