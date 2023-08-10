@@ -37,10 +37,10 @@ app.use(express.json());
 //===== CORS
 const whitelist =
   process.env.NODE_ENV === 'development'
-    ? [process.env.DEV_FRONTEND_URL]
+    ? [process.env.DEV_FRONTEND_URL, `http://192.168.69.17:3001`]
     : [process.env.PRO_FRONTEND_URL];
 
-    console.log(whitelist,1111);
+// console.log(whitelist,1111);
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {

@@ -1,6 +1,6 @@
 @import '../../style.scss';
 
-.social__share {
+.social__createPost {
   @include themify($themes) {
     display: flex !important;
     flex-direction: column;

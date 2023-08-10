@@ -23,7 +23,10 @@ const Home = () => {
         <Stories />
         <Share />
         <Posts />
-        <button style={{padding:'3px 6px'}} onClick={handleLoadMoreBtn} disabled={loading}>
+        <button
+          style={{ padding: '3px 6px' }}
+          onClick={handleLoadMoreBtn}
+          disabled={loading}>
           {loading ? `wait ...` : `load more ...`}
         </button>
       </section>
